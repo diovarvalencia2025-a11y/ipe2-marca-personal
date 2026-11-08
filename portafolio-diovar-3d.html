@@ -1,0 +1,4264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diovar Valencia Ospino — Marca Personal | DAM & Desarrollo Web</title>
+  
+  <!-- Tipografías Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,700;0,800;0,900;1,800&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* RESET & VARIABLES GLOBALES */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --color-cream: #F7F5EF;
+      --color-white: #F9F9F9;
+      --color-dark: #0a0b0c;
+      --color-cloud-grey: #e2dedd;
+      --color-ink: #141516;
+      --color-ink-muted: #5a5d62;
+      --color-ink-light: #8f8b8a;
+      --font-headline: 'Exo 2', sans-serif;
+      --font-ui: 'Public Sans', sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--color-dark);
+      color: var(--color-white);
+      font-family: var(--font-ui);
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--color-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0b0c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #33363b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4f535a;
+    }
+
+    /* NAVBAR FIJO */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.15rem 2.5rem;
+      background: linear-gradient(180deg, rgba(10,11,12,0.92) 0%, rgba(10,11,12,0.4) 70%, rgba(10,11,12,0) 100%);
+      pointer-events: auto;
+    }
+
+    .brand-logo {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-cream);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .brand-logo .dot {
+      width: 9px;
+      height: 9px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(247, 245, 239, 0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .btn-contact {
+      background: rgba(247, 245, 239, 0.12);
+      border: 1px solid rgba(247, 245, 239, 0.25);
+      color: var(--color-cream);
+      padding: 0.5rem 1.15rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-contact:hover {
+      background: var(--color-cream);
+      color: var(--color-dark);
+      border-color: var(--color-cream);
+    }
+
+    /* BOTÓN HAMBURGUESA (SOLO MÓVIL) */
+    .nav-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(247, 245, 239, 0.25);
+      background: rgba(10, 11, 12, 0.6);
+      cursor: pointer;
+      position: relative;
+      z-index: 102;
+    }
+
+    .nav-toggle span {
+      position: absolute;
+      left: 11px;
+      right: 11px;
+      height: 2px;
+      background: var(--color-cream);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+    }
+
+    .nav-toggle span:nth-child(1) { top: 15px; }
+    .nav-toggle span:nth-child(2) { top: 21px; }
+    .nav-toggle span:nth-child(3) { top: 27px; }
+
+    .nav-open .nav-toggle span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+    .nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    .nav-open .nav-toggle span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+    @media (max-width: 820px) {
+      .top-nav {
+        padding: 1rem 1.25rem;
+      }
+      .nav-toggle {
+        display: block;
+      }
+      .nav-links {
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        background: rgba(10, 11, 12, 0.97);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+        z-index: 101;
+      }
+      .nav-open .nav-links {
+        opacity: 1;
+        visibility: visible;
+      }
+      .nav-links a {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* ============================================================
+       HERO PRINCIPAL (UNA SOLA PANTALLA COMPLETA, SIN FRANJAS NEGRAS)
+       ============================================================ */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      padding: 7rem 2.5rem 4rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-dark);
+      overflow: hidden;
+    }
+
+    /* VÍDEO DE FONDO EN BUCLE */
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      filter: contrast(1.05) brightness(0.88);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(10,11,12,0.08) 0%, rgba(10,11,12,0.65) 100%),
+                  linear-gradient(180deg, rgba(10,11,12,0.5) 0%, rgba(10,11,12,0.05) 50%, rgba(10,11,12,0.8) 100%);
+      pointer-events: none;
+    }
+
+    /* CONTENEDOR SPLIT: IZQUIERDA | PASILLO CENTRAL LIBRE PARA EL TREN | DERECHA */
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 240px 1.05fr;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    /* PASILLO CENTRAL TRANSPARENTE: DEJA VER EL TREN EN MOVIMIENTO SIN TAPARLO */
+    .hero-train-spacer {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* LADO IZQUIERDO: NOMBRE DE DIOVAR EN 3 LÍNEAS */
+    .hero-left {
+      text-align: left;
+      padding-right: 1.5rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #93c5fd;
+      margin-bottom: 1rem;
+      background: rgba(10, 11, 12, 0.75);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(147, 197, 253, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-name {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(3.2rem, 5.8vw, 5.8rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--color-cream);
+      text-shadow: 0 10px 30px rgba(0,0,0,0.95);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name span {
+      display: block;
+    }
+
+    .hero-name .highlight-surname {
+      background: linear-gradient(180deg, #FFFFFF 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(247, 245, 239, 0.85);
+      max-width: 440px;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-badges .badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #e2dedd;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+    }
+
+    .scroll-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: rgba(247, 245, 239, 0.7);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .scroll-indicator:hover {
+      color: #fff;
+    }
+
+    .scroll-indicator .arrow-down {
+      display: inline-block;
+      animation: bounce 1.8s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* LADO DERECHO: TEXTO DE PRESENTACIÓN EDITORIAL (MÁQUINA DE ESCRIBIR) */
+    .hero-right-typewriter {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      background: none !important;
+      background-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      padding: 0 0 0 2rem;
+    }
+
+    .tw-tag {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #93c5fd;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+    }
+
+    .tw-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.95);
+    }
+
+    .tw-paragraph-single {
+      font-family: var(--font-ui);
+      font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+      line-height: 1.7;
+      color: rgba(247, 245, 239, 0.95);
+      font-weight: 400;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.95), 0 4px 20px rgba(0,0,0,0.95);
+      min-height: 4.8em;
+    }
+
+    /* CURSOR PARPADEANTE DE TECLADO */
+    .tw-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.15em;
+      background-color: #60a5fa;
+      margin-left: 3px;
+      vertical-align: -2px;
+      animation: blinkCursor 0.65s infinite;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1050px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .hero-train-spacer {
+        display: none;
+      }
+      .hero-section {
+        padding-top: 6rem;
+      }
+      .hero-right-typewriter {
+        padding: 0;
+      }
+    }
+
+    /* ============================================================
+       SECCIÓN EDITORIAL: TU PASAPORTE AL FUTURO PROFESIONAL
+       ============================================================ */
+    .after-clouds-section {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg, #0a0b0c 0%, #1e2022 60px, #e2dedd 220px, #e2dedd 100%);
+      color: var(--color-ink);
+      padding: 8rem 1.5rem 8rem 1.5rem;
+    }
+
+    .main-container {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    /* ENCABEZADO EDITORIAL */
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2.5rem;
+      align-items: flex-end;
+      padding-bottom: 2.5rem;
+      border-bottom: 2px solid rgba(20, 21, 22, 0.16);
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 850px) {
+      .section-header {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #2563eb;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4.4vw, 4rem);
+      line-height: 0.98;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--color-ink);
+    }
+
+    .section-title span.grey {
+      color: var(--color-ink-light);
+    }
+
+    .header-note {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(20, 21, 22, 0.8);
+      font-weight: 500;
+    }
+
+    /* LAS 6 PREGUNTAS OFICIALES DE LA TABLA */
+    .questions-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .q-card {
+      background: #ffffff;
+      border: 1px solid rgba(20, 21, 22, 0.12);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .q-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.09);
+    }
+
+    @media (max-width: 800px) {
+      .q-card {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 1.8rem;
+      }
+    }
+
+    .q-sidebar {
+      border-right: 1px solid rgba(20, 21, 22, 0.1);
+      padding-right: 1.5rem;
+    }
+
+    @media (max-width: 800px) {
+      .q-sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(20, 21, 22, 0.1);
+        padding-right: 0;
+        padding-bottom: 1rem;
+      }
+    }
+
+    .q-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2563eb;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .q-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: 1.65rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: var(--color-ink);
+      letter-spacing: 0.01em;
+    }
+
+    /* ============================================================
+       6 ANIMACIONES SUAVES DIFERENTES PARA LOS TÍTULOS EN 1.ª PERSONA
+       ============================================================ */
+
+    /* 01 · Quién soy -> Máquina de escribir suave con cursor sutil */
+    .q-title.anim-typewriter .tw-text {
+      display: inline;
+    }
+    .q-title.anim-typewriter .tw-caret {
+      display: inline-block;
+      width: 2.5px;
+      height: 0.95em;
+      background-color: #2563eb;
+      margin-left: 3px;
+      vertical-align: -2px;
+      animation: caretPulse 0.9s ease-in-out infinite;
+    }
+    @keyframes caretPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.15; }
+    }
+
+    /* 02 · Qué sé hacer -> Sombra / haz de luz recorriendo letra por letra */
+    .q-title.anim-shadow-wave .letter {
+      display: inline-block;
+      animation: shadowSweep 3.6s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.12s);
+    }
+    @keyframes shadowSweep {
+      0%, 100% {
+        color: var(--color-ink);
+        text-shadow: 0 0 0 rgba(37, 99, 235, 0);
+        transform: translateY(0);
+      }
+      25% {
+        color: #1d4ed8;
+        text-shadow: 0 6px 14px rgba(37, 99, 235, 0.38), 2px 2px 0 rgba(37, 99, 235, 0.14);
+        transform: translateY(-2px);
+      }
+      50% {
+        color: var(--color-ink);
+        text-shadow: 0 0 0 rgba(37, 99, 235, 0);
+        transform: translateY(0);
+      }
+    }
+
+    /* 03 · Qué ofrezco -> Ola flotante suave letra a letra */
+    .q-title.anim-float-wave .letter {
+      display: inline-block;
+      animation: gentleWave 3.2s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.09s);
+    }
+    @keyframes gentleWave {
+      0%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-4px); color: #2563eb; }
+      80% { transform: translateY(0); }
+    }
+
+    /* 04 · Qué necesidades cubro -> Brillo metálico deslizante por las letras */
+    .q-title.anim-shimmer {
+      background: linear-gradient(
+        110deg,
+        #141516 0%,
+        #141516 38%,
+        #2563eb 50%,
+        #60a5fa 54%,
+        #141516 66%,
+        #141516 100%
+      );
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerGlide 4.5s ease-in-out infinite;
+    }
+    @keyframes shimmerGlide {
+      0% { background-position: 120% 0; }
+      65%, 100% { background-position: -60% 0; }
+    }
+
+    /* 05 · Qué defiendo -> Subrayado vivo y pulso firme de carácter */
+    .q-title.anim-underline-pulse {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+    .q-title.anim-underline-pulse::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #2563eb, #10b981);
+      transform-origin: left center;
+      animation: underlineBreath 3.5s ease-in-out infinite;
+    }
+    @keyframes underlineBreath {
+      0%, 100% { transform: scaleX(0.28); opacity: 0.65; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* 06 · Cómo muestro mi trabajo -> Desenfoque a foco nítido + respiración */
+    .q-title.anim-focus-reveal .letter {
+      display: inline-block;
+      animation: focusGlide 4.2s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.07s);
+    }
+    @keyframes focusGlide {
+      0%, 100% {
+        filter: blur(0px);
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        filter: blur(0.6px);
+        opacity: 0.72;
+        transform: scale(0.97);
+        color: #1e40af;
+      }
+    }
+
+    .q-content {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: #2c2f35;
+    }
+
+    .q-content p {
+      margin-bottom: 1rem;
+    }
+
+    .q-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background: #f1f3f5;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    .pill.pill-blue {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+
+    .pill.pill-green {
+      background: #ecfdf5;
+      color: #047857;
+      border-color: #a7f3d0;
+    }
+
+    /* ============================================================
+       SECCIÓN DE LAS 5 FORTALEZAS CLAVE (ESTÉTICA HALO FINTECH + CARRUSEL VERTICAL)
+       ============================================================ */
+    .competencies-block {
+      background: #F5F5F5;
+      border-radius: 28px;
+      padding: 3.5rem 2.75rem;
+      margin-bottom: 5rem;
+      scroll-margin-top: 6rem;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      box-shadow: 0 24px 60px rgba(10, 11, 12, 0.06);
+    }
+
+    @media (max-width: 767px) {
+      .competencies-block {
+        padding: 2.2rem 1.25rem;
+      }
+    }
+
+    /* Row 1 estilo "Meet USD Halo": 2 columnas (Izquierda título + pill negro con círculo blanco | Derecha texto grande) */
+    .halo-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 860px) {
+      .halo-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.2rem;
+      }
+    }
+
+    .halo-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.55);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .halo-heading {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+      color: #000000;
+      margin-bottom: 1.6rem;
+    }
+
+    .halo-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #000000;
+      color: #ffffff;
+      font-family: var(--font-ui);
+      font-size: 0.98rem;
+      font-weight: 500;
+      padding: 0.5rem 0.5rem 0.5rem 1.75rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .halo-pill-btn:hover {
+      background: #1f2937;
+      transform: translateY(-1px);
+    }
+
+    .halo-pill-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #000000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .halo-pill-btn:hover .halo-pill-circle {
+      transform: translateX(2px);
+    }
+
+    .halo-lead-text {
+      font-family: var(--font-ui);
+      font-size: clamp(1.3rem, 2vw, 1.75rem);
+      font-weight: 400;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Row 2: Grid de 4 columnas estilo Halo + Carrusel Vertical interactivo */
+    .halo-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .halo-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .halo-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .halo-card {
+      position: relative;
+      border-radius: 18px;
+      padding: 1.85rem;
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1.15rem;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(.2, .8, .2, 1), box-shadow 0.35s ease;
+    }
+
+    .halo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 45px rgba(43, 38, 68, 0.18);
+    }
+
+    /* Tarjeta 1 (ocupa 2 columnas): Imagen floral Halo "Savings that bloom" */
+    .halo-card.span-2 {
+      grid-column: span 2;
+      justify-content: space-between;
+      min-height: 290px;
+    }
+
+    @media (max-width: 640px) {
+      .halo-card.span-2 {
+        grid-column: span 1;
+      }
+    }
+
+    .halo-card.theme-bloom {
+      background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260423_164207_f243351d-ed59-48ec-83a0-a5e996bdbe3c.png&w=1280&q=85');
+      background-size: cover;
+      background-position: center;
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    /* Tarjetas sólidas #2B2644 (Exactamente el púrpura profundo de Halo, sin huecos vacíos) */
+    .halo-card.theme-purple {
+      background: #2B2644;
+      color: #ffffff;
+    }
+
+    /* Tarjeta 05 dividida: Vídeo completo sin recortar a la izquierda + Texto limpio a la derecha */
+    .halo-card.theme-video-split {
+      grid-column: span 3;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      align-items: stretch;
+      min-height: 270px;
+    }
+
+    @media (max-width: 900px) {
+      .halo-card.theme-video-split {
+        grid-column: span 2;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .halo-card.theme-video-split {
+        grid-column: span 1;
+      }
+    }
+
+    .halo-video-pane {
+      position: relative;
+      background: #f3f1f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 250px;
+    }
+
+    .halo-video-pane video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Muestra toda la figura y las flores completas sin cortar nada */
+      display: block;
+      pointer-events: none;
+    }
+
+    .halo-text-pane {
+      padding: 2rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+      background: #ffffff;
+    }
+
+    .halo-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 1rem;
+      height: 100%;
+      flex: 1;
+    }
+
+    .halo-card.span-2 .halo-card-content {
+      justify-content: space-between;
+    }
+
+    .halo-card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 0.45rem;
+      display: block;
+    }
+
+    .halo-card-title {
+      font-family: var(--font-ui);
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+    }
+
+    .halo-card-body {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      max-width: 24rem;
+      margin-top: 0;
+    }
+
+    .halo-card.theme-bloom .halo-card-body,
+    .halo-card.theme-video-split .halo-card-body {
+      color: rgba(0, 0, 0, 0.72);
+    }
+
+    .halo-card.theme-purple .halo-card-body {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .halo-know-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .halo-know-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 9999px;
+      background: #2B2644;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+
+    .halo-card:hover .halo-know-circle {
+      transform: translateX(3px);
+      background: #000000;
+      color: #ffffff;
+    }
+
+    /* Cinta Marquee inferior de tecnologías dentro del bloque Halo */
+    .halo-tech-marquee-row {
+      margin-top: 2.2rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    @media (max-width: 767px) {
+      .halo-tech-marquee-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .halo-tech-label {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    .halo-marquee-viewport {
+      overflow: hidden;
+      width: 100%;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+    }
+
+    .halo-marquee-track {
+      display: flex;
+      width: max-content;
+      animation: haloMarquee 24s linear infinite;
+    }
+
+    @keyframes haloMarquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .halo-marquee-item {
+      margin: 0 2.2rem;
+      flex-shrink: 0;
+      color: rgba(0, 0, 0, 0.55);
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       MANIFIESTO PERSONAL — VIDRIO AHUMADO ROTO (FACET) + REVELADO PALABRA POR PALABRA (ORVANTE)
+       ============================================================ */
+    .manifesto-banner {
+      position: relative;
+      background: #050507;
+      color: #f4f4f4;
+      border-radius: 28px;
+      min-height: 440px;
+      margin-bottom: 5rem;
+      box-shadow: 0 28px 65px rgba(5, 5, 7, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      perspective: 1200px;
+      user-select: none;
+    }
+
+    /* CAPA INTERNA REVELADA (CON ANIMACIÓN ORVANTE EN LAS PALABRAS DE #6f6f6f A #f4f4f4) */
+    .manifesto-revealed {
+      position: relative;
+      z-index: 2;
+      padding: 3.5rem 3.2rem 3rem;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+      transition: opacity 0.45s ease, transform 0.55s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .manifesto-banner.is-shattered .manifesto-revealed {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition-delay: 0.26s;
+    }
+
+    .manifesto-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .manifesto-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #93c5fd;
+    }
+
+    /* Esquirla "← Volver al cristal" estilo Facet */
+    .facet-back-sliver {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #23232b 0%, #141419 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.45rem 1.05rem;
+      border-radius: 10px 18px 8px 16px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      transform: rotateY(-8deg) rotateX(4deg);
+      transition: all 0.25s ease;
+    }
+
+    .facet-back-sliver:hover {
+      color: #b9abff;
+      border-color: #b9abff;
+      transform: rotateY(0deg) scale(1.04);
+      box-shadow: 0 0 22px rgba(185, 171, 255, 0.28);
+    }
+
+    .manifesto-quote {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+      line-height: 1.33;
+      letter-spacing: -0.025em;
+      text-transform: none;
+      margin-bottom: 2.2rem;
+      max-width: 820px;
+    }
+
+    /* Cada palabra empieza en gris #6f6f6f y se ilumina a blanco #f4f4f4 (o azul claro en las destacadas) estilo Orvante */
+    .orv-word {
+      color: #6f6f6f;
+      transition: color 0.32s ease, text-shadow 0.32s ease;
+      display: inline-block;
+      margin-right: 0.24em;
+    }
+
+    .orv-word.is-lit {
+      color: #f4f4f4;
+    }
+
+    .orv-word.is-accent.is-lit {
+      color: #60a5fa;
+      text-shadow: 0 0 18px rgba(96, 165, 250, 0.25);
+    }
+
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .manifesto-item h4 {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .manifesto-item p {
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    /* CAPA FRONTAL DE VIDRIO AHUMADO CORTADO EN 5 FRAGMENTOS (FACET GLASS SHARDS) */
+    .facet-glass-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      padding: 18px;
+      transform-style: preserve-3d;
+      transition: pointer-events 0.1s;
+    }
+
+    .manifesto-banner.is-shattered .facet-glass-stage {
+      pointer-events: none;
+    }
+
+    .facet-slab {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 404px;
+      transform-style: preserve-3d;
+      transform: rotateX(var(--slab-rx, 0deg)) rotateY(var(--slab-ry, 0deg));
+      transition: transform 0.25s ease-out;
+    }
+
+    /* Cada uno de los 5 fragmentos del cristal con su polígono exacto (A, B, C, D, E de Facet) */
+    .facet-shard {
+      position: absolute;
+      inset: 0;
+      clip-path: var(--poly);
+      background:
+        radial-gradient(320px circle at var(--gx, 50%) var(--gy, 50%), rgba(165, 148, 249, 0.24), rgba(54, 214, 126, 0.08) 45%, transparent 70%),
+        linear-gradient(135deg, #24242c 0%, #17171b 52%, #101014 100%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 20px 45px rgba(0, 0, 0, 0.65);
+      transform-style: preserve-3d;
+      transform: translate3d(0, 0, var(--tz, 0px)) rotateX(var(--srx, 0deg)) rotateY(var(--sry, 0deg));
+      transition: transform 0.38s cubic-bezier(.2, .8, .2, 1), filter 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    /* Al pasar el ratón sobre un fragmento del vidrio, se levanta hacia la cámara y brilla iridiscente */
+    .facet-shard:hover {
+      --tz: 26px;
+      filter: brightness(1.18) contrast(1.05);
+    }
+
+    /* Al romperse el vidrio (.is-shattered), cada fragmento sale disparado y gira en 3D */
+    .manifesto-banner.is-shattered .facet-shard {
+      transform: translate3d(var(--fly-x), var(--fly-y), var(--fly-z)) rotateX(var(--fly-rx)) rotateY(var(--fly-ry)) rotateZ(var(--fly-rz));
+      opacity: 0;
+      transition: transform 0.75s cubic-bezier(.55, .05, .67, .19), opacity 0.65s ease 0.1s;
+    }
+
+    /* Contenido impreso a través de los fragmentos de vidrio ("MI FORMA DE TRABAJAR") */
+    .facet-shard-print {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .facet-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.48);
+      margin-bottom: 0.85rem;
+    }
+
+    .facet-headline {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4.8vw, 4.1rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #dcdce0 55%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.9rem;
+    }
+
+    .facet-sub {
+      font-family: var(--font-ui);
+      font-size: 0.98rem;
+      color: rgba(255, 255, 255, 0.62);
+      max-width: 460px;
+      margin-bottom: 1.6rem;
+    }
+
+    .facet-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .facet-pill {
+      background: #f4f4f6;
+      color: #050507;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .facet-glass-stage:hover .facet-pill {
+      background: #36d67e; /* Verde esmeralda exacto de Facet al interactuar */
+    }
+
+    .facet-link {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Líneas luminosas de corte entre los fragmentos de cristal */
+    .facet-seams-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 15;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .manifesto-banner.is-shattered .facet-seams-svg {
+      opacity: 0;
+    }
+
+    @media (max-width: 767px) {
+      .manifesto-banner {
+        min-height: 360px;
+        border-radius: 20px;
+        margin-bottom: 3.5rem;
+      }
+      .manifesto-revealed {
+        padding: 1.8rem 1.25rem 1.8rem;
+      }
+      .manifesto-top-bar {
+        flex-wrap: wrap;
+      }
+      .facet-glass-stage {
+        padding: 10px;
+      }
+      .facet-slab {
+        min-height: 340px;
+      }
+      .facet-shard-print {
+        padding: 1.25rem;
+      }
+      .facet-headline {
+        font-size: clamp(1.65rem, 6.5vw, 2.5rem);
+      }
+      .facet-sub {
+        font-size: 0.86rem;
+        margin-bottom: 1.1rem;
+      }
+      .facet-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+      .distill-header {
+        padding: 0 1.25rem !important;
+        margin-bottom: 2.8rem !important;
+      }
+      .halo-text-pane {
+        padding: 1.4rem 1.25rem;
+      }
+    }
+
+    /* ============================================================
+       REDES SOCIALES — CINTA CON ESCÁNER DE PARTÍCULAS Y CÓDIGO (ESTILO DISTILL)
+       ============================================================ */
+    .social-scanner-section {
+      --bg: #EEF0F2;
+      --ink-d: #0F1115;
+      --body-d: #2A2E35;
+      --muted-d: #8B9098;
+      --code-d: #6E747E;
+      --comment-d: #9BA1AB;
+      --hot: #FF5A1F;
+      --hot-soft: #FFE1D3;
+      --cw: 420px;
+      --ch: 265px;
+      --gap: 44px;
+      position: relative;
+      background: var(--bg);
+      border-radius: 28px;
+      border: 1px solid rgba(15, 17, 21, 0.12);
+      box-shadow: 0 24px 60px rgba(10, 11, 12, 0.08);
+      padding: 2.8rem 0 2.5rem;
+      margin-bottom: 4rem;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    @media (max-width: 767px) {
+      .social-scanner-section {
+        --cw: 300px;
+        --ch: 235px;
+        --gap: 28px;
+        padding: 2rem 0 2rem;
+      }
+    }
+
+    .distill-header {
+      padding: 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      margin-bottom: 3.6rem;
+    }
+
+    .distill-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--hot);
+      margin-bottom: 0.45rem;
+      display: block;
+    }
+
+    .distill-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--ink-d);
+    }
+
+    .distill-hint {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--body-d);
+      background: #fff;
+      border: 1px solid rgba(15, 17, 21, 0.12);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+    }
+
+    /* Cinta transportadora (Belt) */
+    .distill-belt-stage {
+      position: relative;
+      width: 100%;
+      height: calc(var(--ch) + 90px);
+    }
+
+    /* Pastilla contadora flotante encima del escáner (.badge) */
+    .distill-badge {
+      position: absolute;
+      left: 50%;
+      top: -18px;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .distill-badge-lbl {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted-d);
+      text-transform: uppercase;
+    }
+
+    .distill-badge-pill {
+      height: 26px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 0 18px rgba(255, 90, 31, 0.38);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .distill-badge-num {
+      background: var(--hot);
+      color: #fff;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 11px 0 13px;
+      min-width: 8.5ch;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .distill-badge-pct {
+      background: var(--hot-soft);
+      color: #D9430F;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px 0 10px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* Línea vertical del escáner naranja (.scan) */
+    .distill-scan {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      height: calc(var(--ch) + 32px);
+      width: 0;
+      z-index: 25;
+      pointer-events: none;
+    }
+
+    .distill-scan i {
+      position: absolute;
+      left: -2px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #ff7a3c 0%, #FF5A1F 12%, #FF5A1F 88%, #ff7a3c 100%);
+      box-shadow: 0 0 10px 2px rgba(255, 90, 31, 0.85), 0 0 34px 10px rgba(255, 90, 31, 0.38);
+    }
+
+    .distill-scan b {
+      position: absolute;
+      left: 0;
+      top: 4%;
+      height: 92%;
+      width: 44px;
+      background: linear-gradient(90deg, rgba(255, 110, 50, 0.55), transparent);
+      filter: blur(6px);
+    }
+
+    /* Pista arrastrable con las 3 capas: .codes, .cards y canvas.fx */
+    .distill-belt {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: pan-y;
+      overflow: hidden;
+    }
+    .distill-belt:active {
+      cursor: grabbing;
+    }
+
+    .distill-codes {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 18%);
+      pointer-events: none;
+    }
+
+    .distill-cards {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+    }
+
+    .distill-fx {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Cada tarjeta de Red Social del mismo color cálido/naranja-oscuro de la animación */
+    .d-card,
+    .d-code {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: var(--cw);
+      height: var(--ch);
+      will-change: transform, clip-path;
+    }
+
+    .d-card {
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 1.6rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #FFF3E6;
+      background:
+        radial-gradient(125% 95% at 88% 110%, #FF5A1F 0%, #C83E0B 38%, #2A1406 75%, #160B05 100%);
+      border: 1px solid rgba(255, 138, 61, 0.42);
+      box-shadow: 0 18px 40px rgba(22, 11, 5, 0.24);
+    }
+
+    .d-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 225, 211, 0.18);
+      padding-bottom: 0.75rem;
+    }
+
+    .d-card-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #FFB06A;
+    }
+
+    .d-card-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255, 90, 31, 0.25);
+      border: 1px solid rgba(255, 176, 106, 0.55);
+      color: #FFE1D3;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .d-card-mid {
+      margin: auto 0;
+      padding: 0.5rem 0;
+    }
+
+    .d-card-title {
+      font-family: var(--font-headline);
+      font-size: 1.85rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: #FFFFFF;
+      margin-bottom: 0.45rem;
+    }
+
+    .d-card-desc {
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: rgba(255, 243, 230, 0.86);
+    }
+
+    .d-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 225, 211, 0.15);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #FFD9B5;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Bloque de código HTML que aparece a la izquierda del escáner */
+    .d-code {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px dashed rgba(255, 90, 31, 0.35);
+      border-radius: 20px;
+      padding: 1.15rem 1.3rem;
+      overflow: hidden;
+      white-space: pre;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0.75rem;
+    }
+
+    .d-code-html {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      line-height: 1.42;
+      color: var(--code-d);
+      overflow: hidden;
+    }
+
+    .d-code-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      line-height: 1.45;
+      color: var(--comment-d);
+      overflow: hidden;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 1px solid rgba(20, 21, 22, 0.15);
+      padding: 3rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--color-ink-muted);
+    }
+
+    .footer-left p {
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-right a {
+      color: var(--color-ink);
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
+
+    .footer-right a:hover {
+      text-decoration: underline;
+    }
+
+    /* ============================================================
+       SECCIÓN: WEBS REALIZADAS — ESTANTE CURVO 3D (ESTILO ARCHIVE)
+       ============================================================ */
+    .projects-block {
+      --paper: #ECE8E0;
+      --sheet: #F3F0EA;
+      --cobalt: #1F3FB0;
+      --ease-shelf: cubic-bezier(.2, .8, .2, 1);
+      --H: min(38vh, 26vw, 310px);
+      margin-bottom: 5rem;
+      scroll-margin-top: 6rem;
+      position: relative;
+      background: var(--paper);
+      border-radius: 28px;
+      padding: 3rem 2rem 2.6rem;
+      border: 1px solid rgba(20, 21, 22, 0.14);
+      box-shadow: 0 24px 60px rgba(10, 11, 12, 0.08);
+      overflow: hidden;
+      user-select: none;
+    }
+
+    @media (max-width: 767px) {
+      .projects-block {
+        --H: min(56vw, 32svh, 230px);
+        padding: 2.2rem 1rem 2rem;
+      }
+    }
+
+    .projects-header {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .projects-header h3 {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: 1.85rem;
+      text-transform: uppercase;
+      color: var(--color-ink);
+    }
+
+    .projects-hint {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      font-weight: 700;
+    }
+
+    /* Fondo decorativo halftone estilo archivo */
+    .shelf-bg-kanji {
+      position: absolute;
+      top: 5.5rem;
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+      color: transparent;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(31, 63, 176, 0.35) 0 36%, transparent 40%),
+        linear-gradient(rgba(110, 122, 160, 0.16), rgba(110, 122, 160, 0.16));
+      background-size: 4px 4px, 100% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.7;
+    }
+    .shelf-bg-kanji.left { left: 1.5rem; }
+    .shelf-bg-kanji.right { right: 1.5rem; }
+
+    /* Escenario 3D del estante en arco */
+    .shelf-viewport {
+      position: relative;
+      width: 100%;
+      height: calc(var(--H) + 95px);
+      perspective: 1400px;
+      perspective-origin: 50% 50%;
+      z-index: 10;
+      touch-action: pan-y;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shelf-viewport:active {
+      cursor: grabbing;
+    }
+
+    .shelf-floor-shadow {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + var(--H) * 0.45);
+      transform: translate(-50%, -50%);
+      width: min(92%, calc(var(--H) * 3.6));
+      height: calc(var(--H) * 0.28);
+      background: radial-gradient(50% 50% at 50% 40%, rgba(40, 32, 20, 0.32), rgba(40, 32, 20, 0.10) 55%, transparent 72%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .shelf-probe {
+      position: absolute;
+      width: 0;
+      height: var(--H);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .shelf-stage {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+
+    /* Cada elemento en la fila 3D (Lomo + Portada que gira 90º) */
+    .vhs-tape {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .vhs-face {
+      position: absolute;
+      height: var(--H);
+      top: calc(var(--H) * -0.5);
+      backface-visibility: hidden;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .vhs-face::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #0a0b0c;
+      opacity: var(--shade, 0);
+      pointer-events: none;
+    }
+
+    /* Lomo vertical en la fila */
+    .vhs-spine {
+      background: linear-gradient(180deg, #1d2026 0%, #0f1115 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 4px solid var(--tape-accent, #1F3FB0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.2rem;
+      color: #F3F0EA;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .vhs-spine-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--tape-accent, #60a5fa);
+      letter-spacing: 0.08em;
+    }
+
+    .vhs-spine-title {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #F7F5EF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 70%;
+    }
+
+    .vhs-spine-badge {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      font-weight: 700;
+      padding: 2px 4px;
+      border: 1px solid rgba(243, 240, 234, 0.45);
+      border-radius: 3px;
+      text-transform: uppercase;
+      color: #F3F0EA;
+    }
+
+    /* Portada frontal cuando se escoge en el centro */
+    .vhs-cover {
+      background: #0e1014;
+      border: 1px solid rgba(20, 21, 22, 0.25);
+      box-shadow: 0 34px 60px -25px rgba(20, 16, 10, 0.65);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .vhs-cover-top {
+      background: #14161b;
+      padding: 0.45rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--tape-accent, #1F3FB0);
+    }
+
+    .vhs-cover-top span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #F3F0EA;
+    }
+
+    .vhs-cover-media {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      background: #08090b;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vhs-cover-media img,
+    .vhs-cover-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+    }
+
+    .vhs-cover-play {
+      position: absolute;
+      left: 0.7rem;
+      bottom: 0.7rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cobalt);
+      background: rgba(236, 232, 224, 0.9);
+      color: var(--cobalt);
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    .vhs-cover-foot {
+      background: #14161b;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vhs-cover-foot strong {
+      font-family: var(--font-headline);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    .vhs-cover-foot em {
+      font-style: normal;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: #93c5fd;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Pie de información dinámico debajo de la portada activa (Mask Slide) */
+    .shelf-caption-wrap {
+      position: relative;
+      z-index: 12;
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .shelf-arrow {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(31, 63, 176, 0.35);
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--cobalt);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .shelf-arrow:hover {
+      background: var(--cobalt);
+      color: #fff;
+      transform: scale(1.06);
+    }
+
+    .shelf-caption {
+      display: grid;
+      justify-items: center;
+      text-align: center;
+      gap: 0.35rem;
+      min-width: min(72vw, 480px);
+    }
+
+    .cap-mask {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cap-title-mask { min-height: 2.6rem; align-items: center; }
+    .cap-sub-mask   { min-height: 1.2rem; align-items: center; }
+    .cap-meta-mask  { min-height: 1.3rem; align-items: center; }
+
+    .cap-item {
+      display: block;
+      will-change: transform;
+    }
+
+    .cap-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      line-height: 1.05;
+    }
+
+    .cap-sub {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cobalt);
+    }
+
+    .cap-rule {
+      width: 24px;
+      height: 1.5px;
+      background: var(--cobalt);
+      margin: 0.15rem 0;
+    }
+
+    .cap-meta {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-ink);
+    }
+
+    .cap-open-btn {
+      margin-top: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--cobalt);
+      border: 1px solid var(--cobalt);
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cap-open-btn:hover {
+      background: #141516;
+      border-color: #141516;
+    }
+
+    /* Regla / Timeline inferior interactiva */
+    .shelf-timeline {
+      position: relative;
+      z-index: 12;
+      margin: 1.8rem auto 0;
+      max-width: 980px;
+      height: 48px;
+      cursor: pointer;
+    }
+
+    .shelf-tl-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 14px;
+      height: 1px;
+      background: rgba(31, 63, 176, 0.55);
+    }
+
+    .shelf-tl-ticks {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .shelf-tl-tick {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 4px;
+      color: var(--cobalt);
+    }
+
+    .shelf-tl-tick::before {
+      content: "";
+      width: 1.5px;
+      height: 13px;
+      background: var(--cobalt);
+      opacity: 0.75;
+      margin-bottom: 6px;
+    }
+
+    .shelf-tl-tick span {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cobalt);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 780px) {
+      .shelf-tl-tick:nth-child(even) span {
+        display: none;
+      }
+    }
+
+    .shelf-tl-dot {
+      position: absolute;
+      top: 14px;
+      left: 0%;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--cobalt);
+      box-shadow: 0 0 0 4px rgba(31, 63, 176, 0.2);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Hoja de detalle a pantalla completa (Detail Sheet con clip-path y revelado de tinta) */
+    .archive-detail {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #F3F0EA;
+      color: #141414;
+      display: none;
+      overflow-y: auto;
+    }
+
+    .archive-detail.is-open {
+      display: block;
+    }
+
+    /* Cuando la hoja de detalle está abierta, ocultamos la barra superior principal para que no estorbe */
+    body.detail-sheet-open .top-nav {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .archive-detail-top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243, 240, 234, 0.94);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      border-bottom: 1px solid rgba(20, 20, 20, 0.12);
+    }
+
+    .archive-close-btn {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.25rem;
+      border: 1.5px solid #141414;
+      background: #ffffff;
+      color: #141414;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: all 0.2s ease;
+    }
+
+    .archive-close-btn:hover {
+      background: #1F3FB0;
+      border-color: #1F3FB0;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .archive-detail-brand {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1F3FB0;
+    }
+
+    .archive-detail-grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 3rem;
+      align-items: center;
+      min-height: calc(100vh - 90px);
+    }
+
+    @media (max-width: 900px) {
+      .archive-detail-top { padding: 1.1rem 1.25rem; }
+      .archive-detail-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1.25rem 2.5rem;
+        gap: 2rem;
+      }
+    }
+
+    .archive-detail-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      max-width: 520px;
+    }
+
+    .detail-line-mask {
+      overflow: hidden;
+    }
+
+    .detail-line-inner {
+      display: block;
+      will-change: transform;
+    }
+
+    .detail-sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #1F3FB0;
+    }
+
+    .detail-title {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #1F3FB0;
+    }
+
+    .detail-meta {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6D6A63;
+    }
+
+    .detail-desc {
+      font-family: var(--font-ui);
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: #141414;
+    }
+
+    .detail-credit {
+      font-style: italic;
+      font-size: 0.92rem;
+      color: #6D6A63;
+    }
+
+    .detail-nav-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+    }
+
+    .detail-action-btn {
+      height: 44px;
+      padding: 0 1.25rem;
+      border: 1.5px solid #1F3FB0;
+      background: #1F3FB0;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .detail-action-btn.secondary {
+      background: transparent;
+      color: #1F3FB0;
+    }
+
+    .detail-action-btn:hover {
+      background: #141414;
+      border-color: #141414;
+      color: #fff;
+    }
+
+    .archive-detail-right {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0a0b0c;
+      box-shadow: 0 28px 65px rgba(20, 16, 10, 0.28);
+      border: 1px solid rgba(20, 20, 20, 0.15);
+    }
+
+    .archive-detail-media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      animation: inkBleedReveal 950ms cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    @keyframes inkBleedReveal {
+      0%   { clip-path: circle(0% at 50% 50%); filter: contrast(1.3); }
+      100% { clip-path: circle(120% at 50% 50%); filter: contrast(1); }
+    }
+
+    .archive-detail-media video,
+    .archive-detail-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <header class="top-nav">
+    <a href="#" class="brand-logo">
+      <span class="dot"></span>
+      DIOVAR VALENCIA
+    </a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#perfil">Quién Soy</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#competencias">Competencias</a></li>
+      <li><a href="#valores">Valores</a></li>
+      <li><a href="#contacto" class="btn-contact">Contactar</a></li>
+    </ul>
+  </header>
+
+  <!-- ============================================================
+       HERO PRINCIPAL DIRECTO: PANTALLA COMPLETA INMEDIATA (SIN HUECOS NEGROS)
+       ============================================================ -->
+  <main class="hero-section">
+    
+    <!-- FONDO DE VÍDEO AÉREO -->
+    <div class="hero-video-bg">
+      <video id="bgVideo" 
+             src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e02bb27f-80d8-445f-a03e-1b609dac4261.mp4" 
+             playsinline 
+             muted 
+             autoplay 
+             loop 
+             poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/5e018553-cb8a-420a-819f-fcdfa08e5df0.jpg">
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+
+    <!-- CONTENIDO INMEDIATO EN PANTALLA: IZQUIERDA Y DERECHA -->
+    <div class="hero-grid">
+      
+      <!-- LADO IZQUIERDO: NOMBRE DE DIOVAR EN 3 LÍNEAS -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">MARCA PERSONAL</div>
+        <h1 class="hero-name">
+          <span>DIOVAR</span>
+          <span>VALENCIA</span>
+          <span class="highlight-surname">OSPINO</span>
+        </h1>
+        <div class="hero-badges">
+          <span class="badge">Java</span>
+          <span class="badge">Android Studio</span>
+          <span class="badge">HTML5 & CSS3</span>
+          <span class="badge">WordPress</span>
+          <span class="badge">Bilbao</span>
+        </div>
+        <a href="#perfil" class="scroll-indicator">
+          <span>Ver perfil profesional y pasaporte</span>
+          <span class="arrow-down">↓</span>
+        </a>
+      </div>
+
+      <!-- PASILLO CENTRAL LIBRE: DEJA VER EL TREN COMPLETO EN MOVIMIENTO -->
+      <div class="hero-train-spacer" aria-hidden="true"></div>
+
+      <!-- LADO DERECHO: TEXTO DE PRESENTACIÓN QUE SE ESCRIBE SOLO -->
+      <div class="hero-right-typewriter" id="typewriterBox">
+        <div class="tw-tag">PERFIL PROFESIONAL</div>
+        <h2 class="tw-title">DESARROLLO & COMPROMISO</h2>
+        <p class="tw-paragraph-single" id="heroBioText"></p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       SECCIÓN EDITORIAL: TU PASAPORTE AL FUTURO PROFESIONAL
+       ============================================================ -->
+  <section class="after-clouds-section" id="perfil">
+    <div class="main-container">
+
+      <!-- ENCABEZADO EDITORIAL -->
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            MI PASAPORTE AL<br>
+            <span class="grey">FUTURO PROFESIONAL.</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- LAS 6 SECCIONES EN PRIMERA PERSONA (SIN LA PALABRA PREGUNTA) -->
+      <div class="questions-grid" id="conocimientos">
+
+        <!-- SECCIÓN 01 -->
+        <article class="q-card">
+          <div class="q-sidebar">
+            <div class="q-num">01</div>
+            <h3 class="q-title anim-typewriter" data-typewriter="¿Quién soy?">
+              <span class="tw-text">¿Quién soy?</span><span class="tw-caret" aria-hidden="true"></span>
+            </h3>
+          </div>
+          <div class="q-content">
+            <p><strong>Soy Diovar Valencia Ospino</strong>, estudiante de segundo curso de Desarrollo de Aplicaciones Multiplataforma (DAM) en CEINMARK (Bilbao) y Técnico en Sistemas Informáticos.</p>
+            <p>Vengo de Colombia, donde trabajé durante más de cinco años en atención al cliente, administración y como operario de producción. Esa experiencia me dio una sólida disciplina de trabajo, constancia y una gran soltura para tratar con las personas.</p>
+            <p><strong>Fortaleza principal:</strong> Mi responsabilidad, el buen trato con las personas y las ganas constantes de aprender cosas nuevas por mi cuenta.</p>
+            <p><strong>Punto a mejorar (debilidad controlada):</strong> El perfeccionismo. A veces me detengo demasiado en pulir cada detalle del diseño, pero lo mantengo bajo control organizándome con listas de tareas y fijándome plazos estrictos para entregar siempre a tiempo.</p>
+            <div class="pill-group">
+              <span class="pill pill-blue">2º DAM CEINMARK</span>
+              <span class="pill">Técnico en Sistemas</span>
+              <span class="pill pill-green">Gestión del Tiempo</span>
+              <span class="pill">Atención al Cliente</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECCIÓN 02 -->
+        <article class="q-card">
+          <div class="q-sidebar">
+            <div class="q-num">02</div>
+            <h3 class="q-title anim-shadow-wave" data-split-letters>¿Qué sé hacer?</h3>
+          </div>
+          <div class="q-content">
+            <p><strong>Formación oficial:</strong> Cursando actualmente 2.º curso de DAM, titulado como Técnico en Sistemas Informáticos, certificado de Python por Cisco (Python Essentials) y carné oficial de operador de carretillas elevadoras.</p>
+            <p><strong>Competencias informáticas:</strong> Programación orientada a objetos en Java, diseño y desarrollo de aplicaciones móviles para Android, diseño y maquetación web con HTML5 y CSS3, gestión de contenidos con WordPress y manejo de bases de datos relacionales.</p>
+            <p><strong>Experiencia práctica real:</strong> Participé activamente en la maquetación y carga de contenidos de la página web del Metro de Caracas durante mis prácticas formativas.</p>
+            <p><strong>Habilidades multimedia y aficiones:</strong> Grabación de voz, locución y edición de vídeo. Gestiono mi propio canal diario de YouTube con contenido divulgativo sobre tecnología e informática.</p>
+            <div class="pill-group">
+              <span class="pill pill-blue">Java</span>
+              <span class="pill pill-blue">Android Studio</span>
+              <span class="pill pill-blue">HTML5 & CSS3</span>
+              <span class="pill">WordPress Metro de Caracas</span>
+              <span class="pill">Cisco Python</span>
+              <span class="pill pill-green">Edición de Vídeo & Audio</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECCIÓN 03 -->
+        <article class="q-card">
+          <div class="q-sidebar">
+            <div class="q-num">03</div>
+            <h3 class="q-title anim-float-wave" data-split-letters>¿Qué ofrezco?</h3>
+          </div>
+          <div class="q-content">
+            <p>Ofrezco un <strong>perfil práctico y versátil</strong> que combina la lógica estructurada de la programación con la sensibilidad para crear páginas web claras, sencillas y perfectamente adaptadas a los teléfonos móviles.</p>
+            <p>Aporto puntualidad rigurosa, seriedad en el trabajo diario y capacidad para trabajar con autonomía. Sé escuchar con paciencia las necesidades de las personas y comunicarme de manera clara y directa, sin tecnicismos innecesarios.</p>
+            <div class="pill-group">
+              <span class="pill pill-green">Puntualidad Absoluta</span>
+              <span class="pill">Autonomía</span>
+              <span class="pill">Comunicación Clara</span>
+              <span class="pill pill-blue">Webs Responsive</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECCIÓN 04 -->
+        <article class="q-card">
+          <div class="q-sidebar">
+            <div class="q-num">04</div>
+            <h3 class="q-title anim-shimmer">¿Qué necesidades cubro?</h3>
+          </div>
+          <div class="q-content">
+            <p><strong>Para empresas de informática y desarrollo:</strong> Aporto apoyo sólido en programación de aplicaciones, mantenimiento y actualización de páginas web, y resolución rápida y autónoma de incidencias y tareas de soporte técnico.</p>
+            <p><strong>Para negocios locales (talleres mecánicos, reformas, clínicas, restaurantes):</strong> Resuelvo la falta de presencia digital creando páginas web modernas, limpias y rápidas para que sus clientes potenciales los encuentren fácilmente desde el teléfono móvil y puedan llamar o contactar por WhatsApp al instante.</p>
+            <div class="pill-group">
+              <span class="pill pill-blue">Desarrollo Software</span>
+              <span class="pill">Mantenimiento Web</span>
+              <span class="pill pill-green">Digitalización Negocios Locales</span>
+              <span class="pill">Soporte Técnico</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECCIÓN 05 -->
+        <article class="q-card" id="valores">
+          <div class="q-sidebar">
+            <div class="q-num">05</div>
+            <h3 class="q-title anim-underline-pulse">¿Qué defiendo?</h3>
+          </div>
+          <div class="q-content">
+            <p>Defiendo valores tradicionales e innegociables: la <strong>honradez</strong>, el <strong>cumplimiento riguroso de la palabra dada</strong> y el <strong>respeto absoluto por los plazos de entrega</strong> acordados.</p>
+            <p>Creo firmemente en el trabajo bien hecho desde el primer momento, en el trato con educación y humildad a compañeros y clientes, y en el esfuerzo diario como el único camino hacia la superación personal y profesional.</p>
+            <div class="pill-group">
+              <span class="pill pill-green">Honradez</span>
+              <span class="pill pill-green">Palabra Dada</span>
+              <span class="pill">Respeto</span>
+              <span class="pill">Humildad</span>
+              <span class="pill">Compromiso</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- SECCIÓN 06 -->
+        <article class="q-card">
+          <div class="q-sidebar">
+            <div class="q-num">06</div>
+            <h3 class="q-title anim-focus-reveal" data-split-letters>¿Cómo lo demuestro?</h3>
+          </div>
+          <div class="q-content">
+            <p>Muestro mi trabajo y dedicación de manera transparente a través de tres canales principales:</p>
+            <p><strong>1. Mi página web personal interactiva:</strong> Donde presento mi currículum, mi filosofía de trabajo y muestras prácticas de diseño.</p>
+            <p><strong>2. Mi cuenta de GitHub:</strong> Donde subo y mantengo organizadas las prácticas, proyectos de clase y código en Java y desarrollo web.</p>
+            <p><strong>3. Mi canal diario de YouTube:</strong> Donde demuestro mi constancia, dicción y capacidad de comunicación publicando contenido tecnológico cada día.</p>
+            <div class="pill-group">
+              <span class="pill pill-blue">Portfolio Web</span>
+              <span class="pill pill-blue">GitHub Activo</span>
+              <span class="pill pill-green">Canal Diario YouTube</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SECCIÓN: WEBS REALIZADAS — ESTANTE CURVO 3D (ARCHIVO INTERACTIVO) -->
+      <div class="projects-block" id="proyectos">
+        <div class="projects-header">
+          <div>
+            <span class="header-badge">PORTFOLIO · TRABAJOS REALES</span>
+            <h3>Webs Realizadas</h3>
+          </div>
+          <span class="projects-hint">Arrastra la fila · Usa las flechas · Haz clic en la portada central</span>
+        </div>
+
+        <!-- Tipografía halftone de fondo -->
+        <div class="shelf-bg-kanji left" aria-hidden="true">DISEÑO</div>
+        <div class="shelf-bg-kanji right" aria-hidden="true">WEB 3D</div>
+
+        <!-- Escenario 3D en arco (Curved VHS Archive) -->
+        <div class="shelf-viewport" id="shelfViewport">
+          <div class="shelf-probe" id="shelfProbe"></div>
+          <div class="shelf-floor-shadow" aria-hidden="true"></div>
+          <div class="shelf-stage" id="shelfStage"></div>
+        </div>
+
+        <!-- Pie dinámico con deslizamiento por máscara (Mask Slide) + Flechas -->
+        <div class="shelf-caption-wrap">
+          <button type="button" class="shelf-arrow" id="shelfPrev" aria-label="Proyecto anterior">
+            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 1L1 6l5 5M1 6h23"/>
+            </svg>
+          </button>
+
+          <div class="shelf-caption">
+            <div class="cap-mask cap-title-mask" id="capTitleMask">
+              <span class="cap-item cap-title">Burdina</span>
+            </div>
+            <div class="cap-mask cap-sub-mask" id="capSubMask">
+              <span class="cap-item cap-sub">VÍDEO PÁGINA WEB RESTAURANTE</span>
+            </div>
+            <div class="cap-rule" aria-hidden="true"></div>
+            <div class="cap-mask cap-meta-mask" id="capMetaMask">
+              <span class="cap-item cap-meta">Vídeo página web restaurante</span>
+            </div>
+            <button type="button" class="cap-open-btn" id="shelfOpenBtn">Abrir proyecto →</button>
+          </div>
+
+          <button type="button" class="shelf-arrow" id="shelfNext" aria-label="Proyecto siguiente">
+            <svg width="24" height="12" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M18 1l5 5-5 5M23 6H0"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Regla / Timeline inferior con punto deslizante azul cobalto -->
+        <div class="shelf-timeline" id="shelfTimeline">
+          <div class="shelf-tl-line"></div>
+          <div class="shelf-tl-ticks">
+            <button type="button" class="shelf-tl-tick" data-idx="0"><span>01 · Burdina</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="1"><span>02 · Anisha Sport</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="2"><span>03 · Reformas Center</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="3"><span>04 · Canger Burger</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="4"><span>05 · Primal</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="5"><span>06 · Barbershop</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="6"><span>07 · Kebab</span></button>
+            <button type="button" class="shelf-tl-tick" data-idx="7"><span>08 · La Tasca</span></button>
+          </div>
+          <div class="shelf-tl-dot" id="shelfTlDot"></div>
+        </div>
+      </div>
+
+      <!-- HOJA DE DETALLE A PANTALLA COMPLETA (CRECE DESDE LA PORTADA CON CLIP-PATH) -->
+      <div class="archive-detail" id="archiveDetail" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+        <div class="archive-detail-top">
+          <button type="button" class="archive-close-btn" id="detailCloseBtn">← VOLVER A PROYECTOS (✕)</button>
+          <span class="archive-detail-brand">DIOVAR VALENCIA —— PORTFOLIO WEB</span>
+        </div>
+        <div class="archive-detail-grid">
+          <div class="archive-detail-left">
+            <div class="detail-line-mask"><span class="detail-line-inner detail-sub" id="detailSub"></span></div>
+            <div class="detail-line-mask"><h4 class="detail-line-inner detail-title" id="detailTitle"></h4></div>
+            <div class="detail-line-mask"><span class="detail-line-inner detail-meta" id="detailMeta"></span></div>
+            <div class="detail-line-mask"><p class="detail-line-inner detail-desc" id="detailDesc"></p></div>
+            <div class="detail-line-mask"><p class="detail-line-inner detail-credit">Diseñado y desarrollado por Diovar Valencia Ospino.</p></div>
+            <div class="detail-line-mask">
+              <div class="detail-line-inner detail-nav-row">
+                <button type="button" class="detail-action-btn secondary" id="detailPrevBtn">← Anterior</button>
+                <button type="button" class="detail-action-btn" id="detailNextBtn">Siguiente →</button>
+                <button type="button" class="detail-action-btn secondary" id="detailBackBottomBtn">✕ Cerrar vista</button>
+              </div>
+            </div>
+          </div>
+          <div class="archive-detail-right">
+            <div class="archive-detail-media" id="detailMedia"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: LAS 5 FORTALEZAS CLAVE (ESTÉTICA TARJETAS HALO FINTECH + VÍDEO + MARQUEE) -->
+      <div class="competencies-block" id="competencias">
+        
+        <!-- Row 1: Encabezado 2 columnas estilo "Meet USD Halo." -->
+        <div class="halo-intro-grid">
+          <div>
+            <span class="halo-eyebrow">Habilidades Técnicas y Prácticas</span>
+            <h3 class="halo-heading">Mis 5 Fortalezas Clave.</h3>
+            <a href="#proyectos" class="halo-pill-btn" style="text-decoration: none;">
+              <span>Descubrir proyectos</span>
+              <span class="halo-pill-circle" aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div>
+            <p class="halo-lead-text">
+              Combino programación estructurada en Java y desarrollo web con más de cinco años de trato directo con personas, disciplina diaria y puntualidad absoluta.
+            </p>
+          </div>
+        </div>
+
+        <!-- Row 2: Tarjetas con los colores, imagen floral, púrpura #2B2644 y vídeo en bucle de Halo -->
+        <div class="halo-cards-grid">
+
+          <!-- Tarjeta 01 (ocupa 2 columnas, imagen floral Halo "Savings that bloom") -->
+          <article class="halo-card span-2 theme-bloom">
+            <div class="halo-card-content">
+              <div>
+                <span class="halo-card-tag">01 · PROGRAMACIÓN</span>
+                <h4 class="halo-card-title">Java &amp; Android (DAM)</h4>
+              </div>
+              <p class="halo-card-body">
+                Lógica estructurada de programación orientada a objetos, aplicaciones nativas para Android y bases de datos relacionales con código limpio y bien organizado.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tarjeta 02 (Sólida #2B2644 estilo Halo Card 2) -->
+          <article class="halo-card theme-purple">
+            <div class="halo-card-content">
+              <div>
+                <span class="halo-card-tag">02 · DESARROLLO WEB</span>
+                <h4 class="halo-card-title">HTML, CSS &amp;<br>WordPress.</h4>
+              </div>
+              <p class="halo-card-body">
+                Experiencia práctica real en maquetación y gestión de contenidos, participando activamente en la web oficial del Metro de Caracas.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tarjeta 03 (Sólida #2B2644 estilo Halo Card 3) -->
+          <article class="halo-card theme-purple">
+            <div class="halo-card-content">
+              <div>
+                <span class="halo-card-tag">03 · EXPERIENCIA HUMANA</span>
+                <h4 class="halo-card-title">Atención y<br>escucha real.</h4>
+              </div>
+              <p class="halo-card-body">
+                Más de cinco años de experiencia laboral en atención al cliente y fábrica. Sé comunicar con paciencia, empatía y respeto.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tarjeta 04 (Sólida #2B2644 estilo Halo) -->
+          <article class="halo-card theme-purple">
+            <div class="halo-card-content">
+              <div>
+                <span class="halo-card-tag">04 · RIGOR PROFESIONAL</span>
+                <h4 class="halo-card-title">Puntualidad y<br>disciplina.</h4>
+              </div>
+              <p class="halo-card-body">
+                Responsabilidad innegociable. Me organizo mediante listas de tareas y plazos estrictos para cumplir siempre a tiempo y sin excusas.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tarjeta 05 (Dividida: Vídeo entero sin recortar a la izquierda + Texto limpio a la derecha) -->
+          <article class="halo-card theme-video-split">
+            <div class="halo-video-pane">
+              <video src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_183428_ab5e672a-f608-4dcb-b319-f3e040f02e2d.mp4"
+                     autoplay muted loop playsinline></video>
+            </div>
+            <div class="halo-text-pane">
+              <span class="halo-card-tag">05 · PERFIL VERSÁTIL</span>
+              <h4 class="halo-card-title" style="font-size: clamp(1.7rem, 2.4vw, 2.15rem);">Técnica + Cercanía</h4>
+              <p class="halo-card-body">
+                Un puente práctico que une la solidez técnica del desarrollo de software con la facilidad humana para entender y tratar con personas que necesitan soluciones digitales útiles.
+              </p>
+              <span class="halo-know-more">
+                <span class="halo-know-circle" aria-hidden="true">→</span>
+                <span>Compromiso al 100%</span>
+              </span>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Row 3: Marquee infinito estilo "Backed By" de Halo con tus herramientas y tecnologías -->
+        <div class="halo-tech-marquee-row">
+          <p class="halo-tech-label">
+            Tecnologías y herramientas<br>que aplico en mis proyectos.
+          </p>
+          <div class="halo-marquee-viewport">
+            <div class="halo-marquee-track">
+              <!-- Lista 1 -->
+              <span class="halo-marquee-item" style="font-family: Georgia, serif; font-weight: 700; letter-spacing: -0.02em; font-size: 16px;">Java POO</span>
+              <span class="halo-marquee-item" style="font-family: Arial, sans-serif; font-weight: 900; letter-spacing: 0.08em; font-size: 14px; text-transform: uppercase;">ANDROID STUDIO</span>
+              <span class="halo-marquee-item" style="font-family: 'Trebuchet MS', sans-serif; font-weight: 600; font-style: italic; font-size: 16px;">HTML5 &amp; CSS3</span>
+              <span class="halo-marquee-item" style="font-family: 'Courier New', monospace; font-weight: 700; letter-spacing: 0.14em; font-size: 14px; text-transform: uppercase;">WORDPRESS</span>
+              <span class="halo-marquee-item" style="font-family: Palatino, serif; font-weight: 600; font-size: 16px;">SQL &amp; Bases de Datos</span>
+              <span class="halo-marquee-item" style="font-family: Impact, sans-serif; font-weight: 400; letter-spacing: 0.05em; font-size: 16px;">CISCO PYTHON</span>
+              <span class="halo-marquee-item" style="font-family: Verdana, sans-serif; font-weight: 700; letter-spacing: -0.02em; font-size: 14px;">Git &amp; GitHub</span>
+              <!-- Lista 2 (duplicada para bucle infinito fluido) -->
+              <span class="halo-marquee-item" style="font-family: Georgia, serif; font-weight: 700; letter-spacing: -0.02em; font-size: 16px;">Java POO</span>
+              <span class="halo-marquee-item" style="font-family: Arial, sans-serif; font-weight: 900; letter-spacing: 0.08em; font-size: 14px; text-transform: uppercase;">ANDROID STUDIO</span>
+              <span class="halo-marquee-item" style="font-family: 'Trebuchet MS', sans-serif; font-weight: 600; font-style: italic; font-size: 16px;">HTML5 &amp; CSS3</span>
+              <span class="halo-marquee-item" style="font-family: 'Courier New', monospace; font-weight: 700; letter-spacing: 0.14em; font-size: 14px; text-transform: uppercase;">WORDPRESS</span>
+              <span class="halo-marquee-item" style="font-family: Palatino, serif; font-weight: 600; font-size: 16px;">SQL &amp; Bases de Datos</span>
+              <span class="halo-marquee-item" style="font-family: Impact, sans-serif; font-weight: 400; letter-spacing: 0.05em; font-size: 16px;">CISCO PYTHON</span>
+              <span class="halo-marquee-item" style="font-family: Verdana, sans-serif; font-weight: 700; letter-spacing: -0.02em; font-size: 14px;">Git &amp; GitHub</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BANNER DE MANIFIESTO PERSONAL — VIDRIO AHUMADO ROTO (FACET) + REVELADO PALABRA POR PALABRA (ORVANTE) -->
+      <div class="manifesto-banner" id="manifestoBanner">
+        <!-- CAPA INTERNA REVELADA AL ROMPER EL CRISTAL (CON ANIMACIÓN ORVANTE PALABRA POR PALABRA) -->
+        <div class="manifesto-revealed">
+          <div class="manifesto-top-bar">
+            <div class="manifesto-eyebrow">MI FORMA DE TRABAJAR</div>
+            <button type="button" class="facet-back-sliver" id="facetBackBtn">← Volver al cristal</button>
+          </div>
+          <div class="manifesto-quote" data-orvante-text>
+            Me gusta hacer las cosas bien: <span class="accent-highlight">cumplo lo que prometo, soy puntual</span> y cuido cada trabajo como si fuera mío.
+          </div>
+          <div class="manifesto-grid">
+            <div class="manifesto-item">
+              <h4 data-orvante-text>01 · Disciplina</h4>
+              <p data-orvante-text>Hábitos aprendidos en años de fábrica y atención al público trasladados al desarrollo de software.</p>
+            </div>
+            <div class="manifesto-item">
+              <h4 data-orvante-text>02 · Constancia</h4>
+              <p data-orvante-text>Creación diaria de contenido y formación continua sin descanso.</p>
+            </div>
+            <div class="manifesto-item">
+              <h4 data-orvante-text>03 · Honestidad</h4>
+              <p data-orvante-text>Claridad total en plazos, costes y expectativas técnicas con el cliente y el equipo.</p>
+            </div>
+            <div class="manifesto-item">
+              <h4 data-orvante-text>04 · Aprendizaje</h4>
+              <p data-orvante-text>Capacidad de adaptación inmediata a nuevos lenguajes, frameworks y herramientas.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAPA FRONTAL DE VIDRIO AHUMADO CORTADO EN 5 FRAGMENTOS (ESTILO FACET "DESIGNED IN GLASS") -->
+        <div class="facet-glass-stage" id="facetGlassStage" title="Haz clic para romper el cristal y ver mi forma de trabajar">
+          <div class="facet-slab" id="facetSlab">
+            <!-- Fragmento A (Izquierda) -->
+            <div class="facet-shard" data-shard="A" style="--poly: polygon(0% 0%, 21.6% 0%, 38.1% 72%, 33.6% 100%, 0% 100%); --fly-x: -240px; --fly-y: 60px; --fly-z: 220px; --fly-rx: 28deg; --fly-ry: -42deg; --fly-rz: -18deg;"></div>
+            <!-- Fragmento B (Arriba Centro-Izquierda) -->
+            <div class="facet-shard" data-shard="B" style="--poly: polygon(22.4% 0%, 51.1% 0%, 47.6% 61.5%, 38.7% 71.4%); --fly-x: -70px; --fly-y: -210px; --fly-z: 280px; --fly-rx: 46deg; --fly-ry: -18deg; --fly-rz: 14deg;"></div>
+            <!-- Fragmento C (Arriba Centro-Derecha) -->
+            <div class="facet-shard" data-shard="C" style="--poly: polygon(51.9% 0%, 83.6% 0%, 71.2% 48.6%, 48.4% 61.4%); --fly-x: 110px; --fly-y: -220px; --fly-z: 260px; --fly-rx: -38deg; --fly-ry: 25deg; --fly-rz: 22deg;"></div>
+            <!-- Fragmento D (Abajo Centro) -->
+            <div class="facet-shard" data-shard="D" style="--poly: polygon(38.8% 72.4%, 48.3% 62.4%, 71.4% 49.6%, 86.1% 100%, 34.4% 100%); --fly-x: 40px; --fly-y: 230px; --fly-z: 240px; --fly-rx: -44deg; --fly-ry: 15deg; --fly-rz: -16deg;"></div>
+            <!-- Fragmento E (Derecha) -->
+            <div class="facet-shard" data-shard="E" style="--poly: polygon(84.4% 0%, 100% 0%, 100% 100%, 86.9% 100%, 72.1% 49%); --fly-x: 260px; --fly-y: 50px; --fly-z: 250px; --fly-rx: 24deg; --fly-ry: 48deg; --fly-rz: 20deg;"></div>
+
+            <!-- Líneas luminosas del corte sobre el vidrio ahumado -->
+            <svg class="facet-seams-svg" viewBox="0 0 1000 440" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="facetSeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.55)" />
+                  <stop offset="50%" stop-color="rgba(185,171,255,0.75)" />
+                  <stop offset="100%" stop-color="rgba(54,214,126,0.5)" />
+                </linearGradient>
+              </defs>
+              <g stroke="url(#facetSeamGrad)" stroke-width="1.6" fill="none" opacity="0.85">
+                <line x1="220" y1="0" x2="385" y2="316.8" />
+                <line x1="385" y1="316.8" x2="340" y2="440" />
+                <line x1="515" y1="0" x2="480" y2="272.8" />
+                <line x1="385" y1="316.8" x2="480" y2="272.8" />
+                <line x1="840" y1="0" x2="716" y2="215.6" />
+                <line x1="480" y1="272.8" x2="716" y2="215.6" />
+                <line x1="716" y1="215.6" x2="865" y2="440" />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- REDES SOCIALES Y CANALES — CINTA CON ESCÁNER DE PARTÍCULAS Y CÓDIGO (ESTILO DISTILL) -->
+      <div class="social-scanner-section" id="redes">
+        <div class="distill-header">
+          <div>
+            <span class="distill-eyebrow">CONECTA CONMIGO · CANALES ACTIVOS</span>
+            <h3 class="distill-title">Mis Redes Sociales y Presencia Digital</h3>
+          </div>
+          <span class="distill-hint">Arrastra las tarjetas · Pasa el ratón para pausar</span>
+        </div>
+
+        <div class="distill-belt-stage">
+          <!-- Contador flotante sobre la línea del escáner -->
+          <div class="distill-badge">
+            <span class="distill-badge-lbl">Escáner de código</span>
+            <div class="distill-badge-pill">
+              <span class="distill-badge-num" id="distillNum">−48,193</span>
+              <span class="distill-badge-pct" id="distillPct">91% código</span>
+            </div>
+          </div>
+
+          <!-- Línea vertical naranja resplandeciente -->
+          <div class="distill-scan" aria-hidden="true"><i></i><b></b></div>
+
+          <!-- Cinta con las 3 capas: .codes, .cards y canvas.fx -->
+          <div class="distill-belt" id="distillBelt">
+            <div class="distill-codes" id="distillCodes"></div>
+            <div class="distill-cards" id="distillCards"></div>
+            <canvas class="distill-fx" id="distillCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER / CONTACTO DIRECTO -->
+      <footer class="site-footer" id="contacto">
+        <div class="footer-left">
+          <p><strong>Diovar Valencia Ospino</strong> — Estudiante de 2.º DAM en CEINMARK (Bilbao)</p>
+          <p>Residencia: Basauri (Bizkaia) · Email: <a href="mailto:vdiovar@gmail.com" style="color: inherit; font-weight: 600;">vdiovar@gmail.com</a> · Tel: +34 662 54 74 79</p>
+        </div>
+        <div class="footer-right">
+          <a href="#">Volver Arriba ↑</a>
+        </div>
+      </footer>
+
+    </div>
+  </section>
+
+  <!-- JAVASCRIPT: MOTOR DE MÁQUINA DE ESCRIBIR AUTOMÁTICA -->
+  <script>
+    (function () {
+      const bioText = "Estudiante de 2.º curso de Desarrollo de Aplicaciones Multiplataforma (DAM). Programación orientada a objetos, desarrollo web y compromiso con la palabra dada.";
+      const targetEl = document.getElementById('heroBioText');
+      let charIndex = 0;
+      const speed = 22; // Velocidad de tecleo natural y fluida
+
+      function typeBio() {
+        if (!targetEl) return;
+        if (charIndex < bioText.length) {
+          charIndex++;
+          targetEl.innerHTML = bioText.substring(0, charIndex) + '<span class="tw-cursor"></span>';
+          setTimeout(typeBio, speed);
+        } else {
+          // Al terminar de escribir, dejamos el texto fijo y nítido
+          targetEl.innerHTML = bioText;
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          setTimeout(typeBio, 350);
+        });
+      } else {
+        setTimeout(typeBio, 350);
+      }
+    })();
+  </script>
+
+  <!-- JAVASCRIPT: MENÚ HAMBURGUESA EN MÓVIL -->
+  <script>
+    (function () {
+      const nav = document.querySelector('.top-nav');
+      const toggle = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+
+      function setOpen(open) {
+        nav.classList.toggle('nav-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+
+      toggle.addEventListener('click', function () {
+        setOpen(!nav.classList.contains('nav-open'));
+      });
+
+      // Cerrar al elegir una sección o pulsar ESC
+      links.addEventListener('click', function (e) {
+        if (e.target.closest('a')) setOpen(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && nav.classList.contains('nav-open')) setOpen(false);
+      });
+    })();
+  </script>
+
+  <!-- JAVASCRIPT: ESTANTE CURVO 3D (CURVED VHS ARCHIVE ENGINE) -->
+  <script>
+    (function () {
+      const PROJECTS = [
+        {
+          id: 'burdina',
+          num: '01',
+          title: 'Burdina',
+          sub: 'VÍDEO PÁGINA WEB RESTAURANTE',
+          meta: 'Vídeo página web restaurante',
+          desc: 'Vídeo página web restaurante.',
+          type: 'video',
+          src: 'Video%20Burdina/Burdina%20video.mp4',
+          accent: '#1F3FB0',
+          badge: 'VÍDEO'
+        },
+        {
+          id: 'anisha',
+          num: '02',
+          title: 'Anisha Sport',
+          sub: 'TIENDA ONLINE · ROPA DEPORTIVA, ZAPATILLAS & PERFUMES',
+          meta: 'E-Commerce — Ropa, Perfumes y Zapatillas',
+          desc: 'Tienda online de ropa deportiva, zapatillas y perfumes para dama y caballero. Incluye catálogo con filtros por colección, conjuntos deportivos y atención y pedidos directos por WhatsApp.',
+          type: 'image',
+          src: 'Anisha%20sport.png',
+          accent: '#a3e635',
+          badge: 'TIENDA'
+        },
+        {
+          id: 'reformas',
+          num: '03',
+          title: 'Reformas Center',
+          sub: 'REFORMAS INTEGRALES · DISEÑO DE INTERIORES',
+          meta: 'Servicios — Reformas & Presupuestos',
+          desc: 'Página web corporativa para empresa de reformas integrales y diseño de interiores (Tarragona, Reus y Cambrils), con galería de proyectos, solicitud de presupuesto y contacto directo por WhatsApp.',
+          type: 'image',
+          src: 'Reforma%20Center.png',
+          accent: '#eab308',
+          badge: 'WEB'
+        },
+        {
+          id: 'canger',
+          num: '04',
+          title: 'Canger Smash Burger',
+          sub: 'HAMBURGUESERÍA GOURMET · SMASH NOT BORING',
+          meta: 'Restauración — Menú & Pedidos Online',
+          desc: 'Web moderna y visual para hamburguesería estilo smash burger con carta interactiva, especialidades de la casa, buscador de locales y carrito de compra.',
+          type: 'image',
+          src: 'borning.png',
+          accent: '#0d9488',
+          badge: 'WEB'
+        },
+        {
+          id: 'primal',
+          num: '05',
+          title: 'Primal Studio',
+          sub: 'SONIC IDENTITY & DISEÑO INTERACTIVO 3D',
+          meta: 'Estudio Creativo — Web 3D & Audio IA',
+          desc: 'Landing page de alto impacto visual para estudio de identidad sonora, diseño web 3D interactivo y proyectos digitales con calculadora de presupuestos en tiempo real.',
+          type: 'image',
+          src: 'Primal.png',
+          accent: '#ea580c',
+          badge: 'WEB 3D'
+        },
+        {
+          id: 'barbershop',
+          num: '06',
+          title: 'Barbershop',
+          sub: 'PÁGINA WEB BARBERÍA · RESERVAS',
+          meta: 'Negocio Local — Barbería & Citas',
+          desc: 'Web premium para barbería con estética oscura y dorada, tipografía editorial y sistema directo para reservar cita desde el móvil.',
+          type: 'image',
+          src: 'barberia1.png',
+          accent: '#c9a94b',
+          badge: 'WEB'
+        },
+        {
+          id: 'kebab',
+          num: '07',
+          title: 'Kebab & Fried Chicken',
+          sub: 'PÁGINA WEB RESTAURACIÓN · PEDIDOS',
+          meta: 'Restauración — Comida Rápida & Carrito',
+          desc: 'Diseño enérgico para restaurante de comida rápida con menú interactivo, combos, promociones y carrito de pedidos online en pocos clics.',
+          type: 'image',
+          src: 'kebab1.png',
+          accent: '#f59e0b',
+          badge: 'WEB'
+        },
+        {
+          id: 'latasca',
+          num: '08',
+          title: 'La Tasca',
+          sub: 'PÁGINA WEB RESTAURANTE TRADICIONAL',
+          meta: 'Restauración — Cocina Tradicional & Carta',
+          desc: 'Ambiente cálido y elegante con carta digital, menús, bodega y reserva de mesa pensada para un restaurante tradicional.',
+          type: 'image',
+          src: 'Latasca1.png',
+          accent: '#d9773f',
+          badge: 'WEB'
+        }
+      ];
+
+      const viewport = document.getElementById('shelfViewport');
+      const stage = document.getElementById('shelfStage');
+      const probe = document.getElementById('shelfProbe');
+      const capTitleMask = document.getElementById('capTitleMask');
+      const capSubMask = document.getElementById('capSubMask');
+      const capMetaMask = document.getElementById('capMetaMask');
+      const tlDot = document.getElementById('shelfTlDot');
+      const tlTicks = Array.from(document.querySelectorAll('.shelf-tl-tick'));
+
+      const detailEl = document.getElementById('archiveDetail');
+      const detailSub = document.getElementById('detailSub');
+      const detailTitle = document.getElementById('detailTitle');
+      const detailMeta = document.getElementById('detailMeta');
+      const detailDesc = document.getElementById('detailDesc');
+      const detailMedia = document.getElementById('detailMedia');
+
+      if (!viewport || !stage || !probe) return;
+
+      const N_BASE = PROJECTS.length; // 8 proyectos reales
+      const COPIES = 4;               // 32 cintas en el arco 3D
+      const TOTAL = N_BASE * COPIES;  // 32
+      const P = 1400;                 // Perspectiva CSS
+
+      let H = 280, ws = 52, d = 360, gap = 11, U = 360;
+      let XS = [];
+
+      function measure() {
+        H = probe.getBoundingClientRect().height || 260;
+        ws = H * (155 / 840);
+        d = H * (1180 / 900); // Formato panorámico para que el vídeo y las webs se vean completos
+        gap = H * 0.04;
+        U = (window.innerWidth < 768 ? H * 1.15 : H * 1.45);
+
+        XS = [0];
+        const maxU = Math.ceil(U * 3.2);
+        let acc = 0;
+        for (let u = 2; u <= maxU; u += 2) {
+          acc += 2 / (1 + Math.pow(u / U, 1.6));
+          XS.push(acc);
+        }
+
+        tapes.forEach(function (t) {
+          t.spine.style.width = ws + 'px';
+          t.spine.style.left = (-ws / 2) + 'px';
+          t.spine.style.transform = 'translateZ(' + (d / 2) + 'px)';
+
+          t.cover.style.width = d + 'px';
+          t.cover.style.left = (-d / 2) + 'px';
+          t.cover.style.transform = 'rotateY(90deg) translateZ(' + (ws / 2) + 'px)';
+        });
+      }
+
+      function scl(u) {
+        return 1 / (1 + Math.pow(Math.abs(u) / U, 1.6));
+      }
+
+      function xsc(u) {
+        const abs = Math.abs(u);
+        const idx = Math.min(XS.length - 1, Math.floor(abs / 2));
+        return (u < 0 ? -1 : 1) * (XS[idx] || 0);
+      }
+
+      function smoothstep(x) {
+        const c = Math.max(0, Math.min(1, x));
+        return c * c * (3 - 2 * c);
+      }
+
+      function B(r) {
+        if (Math.abs(r) < 1) {
+          return (r + Math.sin(Math.PI * r) / Math.PI) / 2;
+        }
+        return r > 0 ? 0.5 : -0.5;
+      }
+
+      function F(r) {
+        return r * (ws + gap) + (d - ws + 1.4 * gap) * B(r);
+      }
+
+      function rel(v, sVal) {
+        let diff = (v - sVal) % TOTAL;
+        if (diff < -TOTAL / 2) diff += TOTAL;
+        if (diff >= TOTAL / 2) diff -= TOTAL;
+        return diff;
+      }
+
+      // Crear las 28 cintas en el estante curvo 3D
+      const tapes = [];
+      for (let v = 0; v < TOTAL; v++) {
+        const proj = PROJECTS[v % N_BASE];
+        const el = document.createElement('div');
+        el.className = 'vhs-tape';
+        el.style.setProperty('--tape-accent', proj.accent);
+
+        const spine = document.createElement('div');
+        spine.className = 'vhs-face vhs-spine';
+        spine.innerHTML =
+          '<span class="vhs-spine-num">' + proj.num + '</span>' +
+          '<span class="vhs-spine-title">' + proj.title + '</span>' +
+          '<span class="vhs-spine-badge">' + proj.badge + '</span>';
+
+        const cover = document.createElement('div');
+        cover.className = 'vhs-face vhs-cover';
+
+        let mediaHTML = '';
+        if (proj.type === 'video') {
+          mediaHTML =
+            '<video src="' + proj.src + '#t=0.5" muted loop playsinline preload="metadata"></video>' +
+            '<span class="vhs-cover-play">▶</span>';
+        } else {
+          mediaHTML = '<img src="' + proj.src + '" alt="' + proj.title + '" loading="lazy">';
+        }
+
+        cover.innerHTML =
+          '<div class="vhs-cover-top"><span>DIOVAR VALENCIA · ARCHIVO WEB</span><span>' + proj.num + '</span></div>' +
+          '<div class="vhs-cover-media">' + mediaHTML + '</div>' +
+          '<div class="vhs-cover-foot"><strong>' + proj.title + '</strong><em>' + proj.badge + '</em></div>';
+
+        el.appendChild(spine);
+        el.appendChild(cover);
+        stage.appendChild(el);
+
+        const tapeObj = {
+          v: v,
+          projIndex: v % N_BASE,
+          el: el,
+          spine: spine,
+          cover: cover,
+          video: cover.querySelector('video'),
+          lift: 0,
+          hovered: false
+        };
+
+        el.addEventListener('mouseenter', function () { tapeObj.hovered = true; });
+        el.addEventListener('mouseleave', function () { tapeObj.hovered = false; });
+        el.addEventListener('click', function () {
+          if (dragMoved) return;
+          const r = rel(tapeObj.v, s);
+          if (Math.abs(r) < 0.35) {
+            openDetail(activeIdx, tapeObj.cover);
+          } else {
+            T = Math.round(s + r);
+          }
+        });
+
+        tapes.push(tapeObj);
+      }
+
+      // Empezamos en el índice 0 (Burdina: Vídeo página web restaurante)
+      let s = N_BASE * 3;
+      let T = s;
+      let activeIdx = 0;
+      let tiltX = 0, tiltY = 0, targetTiltX = 0, targetTiltY = 0;
+      let tlPos = 0;
+      let detailOpen = false;
+      let lastOpenCoverEl = null;
+
+      // Deslizamiento de textos por máscara (Mask Slide)
+      function slideMask(maskEl, newText, className, dir) {
+        if (!maskEl) return;
+        const oldSpans = Array.from(maskEl.querySelectorAll('.cap-item'));
+        const nextSpan = document.createElement('span');
+        nextSpan.className = 'cap-item ' + className;
+        nextSpan.textContent = newText;
+        maskEl.appendChild(nextSpan);
+
+        const dSign = dir >= 0 ? 1 : -1;
+        if ( nextSpan.animate ) {
+          nextSpan.animate([
+            { transform: 'translateY(' + (dSign * 105) + '%)' },
+            { transform: 'translateY(0%)' }
+          ], { duration: 600, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' });
+        }
+
+        oldSpans.forEach(function (old) {
+          if (old.animate) {
+            const anim = old.animate([
+              { transform: 'translateY(0%)' },
+              { transform: 'translateY(' + (-dSign * 105) + '%)' }
+            ], { duration: 600, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' });
+            anim.onfinish = function () { old.remove(); };
+          } else {
+            old.remove();
+          }
+        });
+      }
+
+      function updateCaption(newIdx, dir) {
+        const p = PROJECTS[newIdx];
+        slideMask(capTitleMask, p.title, 'cap-title', dir);
+        slideMask(capSubMask, p.sub, 'cap-sub', dir);
+        slideMask(capMetaMask, p.meta, 'cap-meta', dir);
+      }
+
+      // Controles de flechas, botón abrir y timeline
+      document.getElementById('shelfPrev').addEventListener('click', function () { T = Math.round(T - 1); });
+      document.getElementById('shelfNext').addEventListener('click', function () { T = Math.round(T + 1); });
+      document.getElementById('shelfOpenBtn').addEventListener('click', function () {
+        let best = tapes[0];
+        let minR = 999;
+        tapes.forEach(function (t) {
+          const ar = Math.abs(rel(t.v, s));
+          if (ar < minR) { minR = ar; best = t; }
+        });
+        openDetail(activeIdx, best.cover);
+      });
+
+      tlTicks.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const targetIdx = parseInt(btn.getAttribute('data-idx'), 10);
+          const curMod = ((Math.round(T) % N_BASE) + N_BASE) % N_BASE;
+          let diff = targetIdx - curMod;
+          if (diff > N_BASE / 2) diff -= N_BASE;
+          if (diff < -N_BASE / 2) diff += N_BASE;
+          T = Math.round(T + diff);
+        });
+      });
+
+      // Arrastrar con ratón o dedo (Drag scrub)
+      let dragging = false, dragStartX = 0, dragStartT = 0, dragMoved = false;
+      viewport.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        dragMoved = false;
+        dragStartX = e.clientX;
+        dragStartT = T;
+        viewport.setPointerCapture(e.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', function (e) {
+        const rect = viewport.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+
+        if (Math.abs(mx - cx) < d * 0.55 && Math.abs(my - cy) < H * 0.55 && Math.abs(T - s) < 0.3) {
+          targetTiltY = ((mx - cx) / (0.55 * d)) * 8;
+          targetTiltX = -((my - cy) / (H / 2)) * 5;
+        } else {
+          targetTiltY = ((mx - cx) / rect.width) * 4;
+          targetTiltX = 0;
+        }
+
+        if (!dragging) return;
+        const dx = e.clientX - dragStartX;
+        if (Math.abs(dx) > 5) dragMoved = true;
+        if (dragMoved) {
+          T = dragStartT - dx / (ws + gap);
+        }
+      });
+
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        T = Math.round(T);
+        setTimeout(function () { dragMoved = false; }, 40);
+      }
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      viewport.addEventListener('mouseleave', function () {
+        targetTiltX = 0;
+        targetTiltY = 0;
+      });
+
+      // Hoja de detalle a pantalla completa (Detail Sheet)
+      function populateDetail(idx) {
+        const p = PROJECTS[idx];
+        detailSub.textContent = p.sub;
+        detailTitle.textContent = p.title;
+        detailMeta.textContent = p.meta;
+        detailDesc.textContent = p.desc;
+        detailMedia.innerHTML = '';
+
+        if (p.type === 'video') {
+          const v = document.createElement('video');
+          v.src = p.src;
+          v.controls = true;
+          v.autoplay = true;
+          v.playsInline = true;
+          detailMedia.appendChild(v);
+        } else {
+          const img = document.createElement('img');
+          img.src = p.src;
+          img.alt = p.title;
+          detailMedia.appendChild(img);
+        }
+
+        // Animar las líneas de texto subiendo desde su máscara
+        const lines = detailEl.querySelectorAll('.detail-line-inner');
+        lines.forEach(function (line, i) {
+          if (line.animate) {
+            line.animate([
+              { transform: 'translateY(110%)' },
+              { transform: 'translateY(0%)' }
+            ], {
+              duration: 750,
+              delay: 280 + i * 70,
+              easing: 'cubic-bezier(.2,.8,.2,1)',
+              fill: 'both'
+            });
+          }
+        });
+      }
+
+      // Mover archiveDetail directamente al body para que quede por encima de la barra superior (.top-nav)
+      if (detailEl && detailEl.parentNode !== document.body) {
+        document.body.appendChild(detailEl);
+      }
+
+      function openDetail(idx, coverEl) {
+        detailOpen = true;
+        lastOpenCoverEl = coverEl;
+        populateDetail(idx);
+        detailEl.classList.add('is-open');
+        document.body.classList.add('detail-sheet-open');
+        document.body.style.overflow = 'hidden';
+
+        if (coverEl && detailEl.animate) {
+          const r = coverEl.getBoundingClientRect();
+          const top = Math.max(0, r.top);
+          const left = Math.max(0, r.left);
+          const right = Math.max(0, window.innerWidth - r.right);
+          const bottom = Math.max(0, window.innerHeight - r.bottom);
+
+          detailEl.animate([
+            { clipPath: 'inset(' + top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px round 8px)' },
+            { clipPath: 'inset(0px 0px 0px 0px round 0px)' }
+          ], {
+            duration: 750,
+            easing: 'cubic-bezier(.76,0,.18,1)',
+            fill: 'both'
+          });
+        }
+      }
+
+      function closeDetail() {
+        if (!detailOpen) return;
+        detailMedia.innerHTML = '';
+        detailOpen = false;
+        document.body.classList.remove('detail-sheet-open');
+        document.body.style.overflow = '';
+
+        if (lastOpenCoverEl && detailEl.animate) {
+          const r = lastOpenCoverEl.getBoundingClientRect();
+          const top = Math.max(0, r.top);
+          const left = Math.max(0, r.left);
+          const right = Math.max(0, window.innerWidth - r.right);
+          const bottom = Math.max(0, window.innerHeight - r.bottom);
+
+          const anim = detailEl.animate([
+            { clipPath: 'inset(0px 0px 0px 0px round 0px)' },
+            { clipPath: 'inset(' + top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px round 8px)' }
+          ], {
+            duration: 500,
+            easing: 'cubic-bezier(.76,0,.18,1)'
+          });
+          anim.onfinish = function () {
+            detailEl.classList.remove('is-open');
+          };
+          // Seguro por si la animación se cancela
+          setTimeout(function () {
+            if (!detailOpen) detailEl.classList.remove('is-open');
+          }, 520);
+        } else {
+          detailEl.classList.remove('is-open');
+        }
+      }
+
+      document.getElementById('detailCloseBtn').addEventListener('click', closeDetail);
+      const backBottomBtn = document.getElementById('detailBackBottomBtn');
+      if (backBottomBtn) backBottomBtn.addEventListener('click', closeDetail);
+      document.getElementById('detailPrevBtn').addEventListener('click', function () {
+        T = Math.round(T - 1);
+        const nextIdx = ((Math.round(T) % N_BASE) + N_BASE) % N_BASE;
+        populateDetail(nextIdx);
+      });
+      document.getElementById('detailNextBtn').addEventListener('click', function () {
+        T = Math.round(T + 1);
+        const nextIdx = ((Math.round(T) % N_BASE) + N_BASE) % N_BASE;
+        populateDetail(nextIdx);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (detailOpen) {
+          if (e.key === 'Escape') closeDetail();
+          if (e.key === 'ArrowLeft') document.getElementById('detailPrevBtn').click();
+          if (e.key === 'ArrowRight') document.getElementById('detailNextBtn').click();
+        }
+      });
+
+      // Bucle principal requestAnimationFrame (Física de resorte y geometría del arco 3D)
+      let lastTime = performance.now();
+      measure();
+      window.addEventListener('resize', measure);
+
+      function tick(now) {
+        const dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+
+        const kSpring = dragging ? 18 : 5.2;
+        s += (T - s) * (1 - Math.exp(-kSpring * dt));
+
+        // Mantener s y T dentro del rango central de copias
+        if (s > TOTAL - N_BASE * 2) { s -= N_BASE * 2; T -= N_BASE * 2; }
+        if (s < N_BASE * 2)         { s += N_BASE * 2; T += N_BASE * 2; }
+
+        const roundedIdx = ((Math.round(s) % N_BASE) + N_BASE) % N_BASE;
+        if (roundedIdx !== activeIdx) {
+          const dir = T >= s ? 1 : -1;
+          activeIdx = roundedIdx;
+          updateCaption(activeIdx, dir);
+        }
+
+        // Punto deslizante de la línea inferior (Timeline dot)
+        const targetTl = (activeIdx / (N_BASE - 1)) * 100;
+        tlPos += (targetTl - tlPos) * (1 - Math.exp(-12 * dt));
+        if (tlDot) tlDot.style.left = tlPos + '%';
+
+        // Suavizado de inclinación en la portada central
+        tiltX += (targetTiltX - tiltX) * (1 - Math.exp(-7 * dt));
+        tiltY += (targetTiltY - tiltY) * (1 - Math.exp(-7 * dt));
+
+        // Posicionar cada una de las 28 cintas en el arco 3D
+        for (let i = 0; i < tapes.length; i++) {
+          const t = tapes[i];
+          const r = rel(t.v, s);
+          const o = smoothstep(Math.max(0, 1 - Math.abs(r)));
+          const u = F(r);
+
+          if (Math.abs(u) > U * 1.95) {
+            t.el.style.display = 'none';
+            if (t.video && !t.video.paused) t.video.pause();
+            continue;
+          }
+          t.el.style.display = 'block';
+
+          // Reproducir automáticamente el vídeo cuando es la portada activa en el centro
+          if (t.video) {
+            if (o > 0.8 && !detailOpen) {
+              if (t.video.paused) t.video.play().catch(function () {});
+            } else {
+              if (!t.video.paused) t.video.pause();
+            }
+          }
+
+          const targetLift = (t.hovered && Math.abs(r) > 0.5) ? 1 : 0;
+          t.lift += (targetLift - t.lift) * (1 - Math.exp(-12 * dt));
+
+          const sc = scl(u);
+          const k = 1 / sc;
+          const z = P * (1 - k) + o * H * 0.12;
+          const x = xsc(u) * k;
+          const y = (H * 0.5 * (1 - sc) * 0.42 + o * H * 0.012 - t.lift * H * 0.06) * k;
+
+          const signU = u < 0 ? -1 : 1;
+          const rotY = signU * Math.min(1, Math.abs(u) / U) * 26 * (1 - o) - 90 * o + tiltY * o;
+          const rotX = tiltX * o;
+
+          t.el.style.transform =
+            'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,' + z.toFixed(2) + 'px) ' +
+            'rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg)';
+          t.el.style.zIndex = String(Math.round(3000 + z));
+
+          const spineShade = Math.min(0.62, o * 0.55 + (1 - sc) * 0.34);
+          const coverShade = (1 - o) * 0.82;
+          t.spine.style.setProperty('--shade', spineShade.toFixed(3));
+          t.cover.style.setProperty('--shade', coverShade.toFixed(3));
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+  <!-- JAVASCRIPT: ANIMACIONES SUAVES POR LETRA Y ESCRITURA EN LAS 6 SECCIONES -->
+  <script>
+    (function () {
+      // 1. Dividir en <span class="letter"> los títulos que llevan animación letra por letra (Sombra, Ola, Foco)
+      document.querySelectorAll('[data-split-letters]').forEach(function (el) {
+        const text = el.textContent.trim();
+        el.setAttribute('aria-label', text);
+        el.innerHTML = '';
+        let idx = 0;
+        for (const ch of text) {
+          if (ch === ' ') {
+            el.appendChild(document.createTextNode(' '));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'letter';
+            span.style.setProperty('--i', idx++);
+            span.setAttribute('aria-hidden', 'true');
+            span.textContent = ch;
+            el.appendChild(span);
+          }
+        }
+      });
+
+      // 2. Animación suave de escritura continua en la Sección 01 (¿Quién soy?)
+      const twHeading = document.querySelector('[data-typewriter]');
+      if (twHeading) {
+        const fullText = twHeading.getAttribute('data-typewriter');
+        const textSpan = twHeading.querySelector('.tw-text');
+        let pos = 0;
+        let deleting = false;
+
+        function loopTypewriter() {
+          if (!textSpan) return;
+          if (!deleting) {
+            pos++;
+            textSpan.textContent = fullText.slice(0, pos);
+            if (pos >= fullText.length) {
+              deleting = true;
+              setTimeout(loopTypewriter, 3200); // Pausa larga para leer cómodamente
+              return;
+            }
+            setTimeout(loopTypewriter, 95);
+          } else {
+            pos--;
+            textSpan.textContent = fullText.slice(0, pos);
+            if (pos <= 1) {
+              deleting = false;
+              setTimeout(loopTypewriter, 450);
+              return;
+            }
+            setTimeout(loopTypewriter, 45);
+          }
+        }
+
+        // Inicia cuando el usuario llega a la sección o tras un pequeño margen
+        setTimeout(loopTypewriter, 800);
+      }
+
+      // 3. Efecto 3D interactivo y luz que sigue al cursor en las 5 tarjetas de Fortalezas (.comp-card)
+      const compCards = document.querySelectorAll('.comp-card');
+      compCards.forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--gx', (x * 100) + '%');
+          card.style.setProperty('--gy', (y * 100) + '%');
+          card.style.setProperty('--ry', ((x - 0.5) * 12) + 'deg');
+          card.style.setProperty('--rx', ((0.5 - y) * 12) + 'deg');
+        });
+        card.addEventListener('mouseleave', function () {
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+        });
+      });
+    })();
+  </script>
+
+  <!-- JAVASCRIPT: MOTOR DEL ESCÁNER DE PARTÍCULAS Y CÓDIGO EN REDES SOCIALES (DISTILL ENGINE) -->
+  <script>
+    (function () {
+      const belt = document.getElementById('distillBelt');
+      const cardsWrap = document.getElementById('distillCards');
+      const codesWrap = document.getElementById('distillCodes');
+      const canvas = document.getElementById('distillCanvas');
+      const numEl = document.getElementById('distillNum');
+      const pctEl = document.getElementById('distillPct');
+
+      if (!belt || !cardsWrap || !codesWrap || !canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const SOCIAL_ITEMS = [
+        {
+          kicker: 'CÓDIGO & PRÁCTICAS',
+          pill: 'REPOSITORIOS',
+          title: 'GitHub',
+          desc: 'Repositorio de proyectos de clase en Java, Android, HTML/CSS y ejercicios de programación.',
+          footLeft: 'github.com/diovarvalencia2025-a11y',
+          footRight: 'ABRIR PERFIL ↗',
+          href: 'https://github.com/diovarvalencia2025-a11y',
+          orig: 70411,
+          dist: 6140,
+          pct: '91% less',
+          html:
+            '<h1>GitHub — Diovar Valencia</h1>\n' +
+            '<p>Repositorio de proyectos en Java,\nAndroid Studio, HTML5 y CSS3.</p>\n' +
+            '<h2>Destacados</h2>\n' +
+            '<ul>\n' +
+            '  <li>POO & Bases de datos Java</li>\n' +
+            '  <li>Apps nativas Android (DAM)</li>\n' +
+            '  <li>Maquetación Web Responsive</li>\n' +
+            '</ul>\n' +
+            '<a href="https://github.com">Ver código</a>',
+          meta:
+            '<!-- distilled: 6,140 tokens -->\n' +
+            '<!-- original: 70,411 tokens -->\n' +
+            '<!-- github.com/diovarvalencia -->'
+        },
+        {
+          kicker: 'VÍDEO & LOCUCIÓN',
+          pill: 'CANAL DIARIO',
+          title: 'YouTube',
+          desc: 'Publicación diaria de contenidos tecnológicos con voz propia y aprendizaje de tutoriales avanzados.',
+          footLeft: 'youtube.com · Divulgación Tech',
+          footRight: 'VER CANAL ↗',
+          href: 'https://www.youtube.com',
+          orig: 98432,
+          dist: 6300,
+          pct: '94% less',
+          html:
+            '<h1>YouTube — Canal Tecnológico</h1>\n' +
+            '<p>Publicación diaria de vídeos sobre\ninformática, código y tecnología.</p>\n' +
+            '<h2>Habilidades</h2>\n' +
+            '<ul>\n' +
+            '  <li>Locución y grabación de voz</li>\n' +
+            '  <li>Edición de vídeo diaria</li>\n' +
+            '  <li>Comunicación clara y directa</li>\n' +
+            '</ul>\n' +
+            '<a href="https://youtube.com">Suscribirse</a>',
+          meta:
+            '<!-- distilled: 6,300 tokens -->\n' +
+            '<!-- original: 98,432 tokens -->\n' +
+            '<!-- youtube.com/@diovar -->'
+        },
+        {
+          kicker: 'RED PROFESIONAL',
+          pill: 'NETWORKING',
+          title: 'LinkedIn',
+          desc: 'Conexión con empresas de software, desarrolladores del sector y seguimiento de ofertas de empleo.',
+          footLeft: 'linkedin.com · Bilbao / Bizkaia',
+          footRight: 'CONECTAR ↗',
+          href: '#contacto',
+          orig: 55870,
+          dist: 8215,
+          pct: '85% less',
+          html:
+            '<h1>LinkedIn — Perfil Profesional</h1>\n' +
+            '<p>Conexión con empresas de desarrollo\ny equipos IT en el País Vasco.</p>\n' +
+            '<h2>Trayectoria</h2>\n' +
+            '<ul>\n' +
+            '  <li>Técnico en Sistemas Informáticos</li>\n' +
+            '  <li>Desarrollo Multiplataforma (DAM)</li>\n' +
+            '  <li>+5 años en atención al cliente</li>\n' +
+            '</ul>\n' +
+            '<a href="#contacto">Contactar</a>',
+          meta:
+            '<!-- distilled: 8,215 tokens -->\n' +
+            '<!-- original: 55,870 tokens -->\n' +
+            '<!-- linkedin.com/in/diovar -->'
+        },
+        {
+          kicker: 'DIVULGACIÓN CORTA',
+          pill: 'CLIPS & DIRECTOS',
+          title: 'TikTok / Twitch',
+          desc: 'Formato corto para estar al día de novedades informáticas y retransmisiones en directo de programación.',
+          footLeft: 'tiktok & twitch · Novedades IT',
+          footRight: 'EXPLORAR ↗',
+          href: '#contacto',
+          orig: 63904,
+          dist: 5512,
+          pct: '91% less',
+          html:
+            '<h1>TikTok & Twitch — Directos</h1>\n' +
+            '<p>Formato ágil sobre novedades de\ninformática y sesiones de código.</p>\n' +
+            '<h2>Formato</h2>\n' +
+            '<ul>\n' +
+            '  <li>Clips cortos de tecnología</li>\n' +
+            '  <li>Prácticas de programación en vivo</li>\n' +
+            '  <li>Aprendizaje continuo</li>\n' +
+            '</ul>\n' +
+            '<a href="#contacto">Seguir</a>',
+          meta:
+            '<!-- distilled: 5,512 tokens -->\n' +
+            '<!-- original: 63,904 tokens -->\n' +
+            '<!-- tiktok.com/@diovar -->'
+        }
+      ];
+
+      // Duplicamos las 4 tarjetas a 8 en la cinta para que el bucle sea continuo y fluido en cualquier pantalla
+      const BELT_DATA = SOCIAL_ITEMS.concat(SOCIAL_ITEMS);
+      const N = BELT_DATA.length;
+      const items = [];
+
+      BELT_DATA.forEach(function (d, i) {
+        const card = document.createElement('a');
+        card.className = 'd-card';
+        card.href = d.href;
+        if (d.href.indexOf('http') === 0) {
+          card.target = '_blank';
+          card.rel = 'noopener';
+        }
+        card.innerHTML =
+          '<div class="d-card-top">' +
+            '<span class="d-card-kicker">' + d.kicker + '</span>' +
+            '<span class="d-card-pill">' + d.pill + '</span>' +
+          '</div>' +
+          '<div class="d-card-mid">' +
+            '<h4 class="d-card-title">' + d.title + '</h4>' +
+            '<p class="d-card-desc">' + d.desc + '</p>' +
+          '</div>' +
+          '<div class="d-card-foot">' +
+            '<span>' + d.footLeft + '</span>' +
+            '<span>' + d.footRight + '</span>' +
+          '</div>';
+
+        const code = document.createElement('div');
+        code.className = 'd-code';
+        const preHtml = document.createElement('div');
+        preHtml.className = 'd-code-html';
+        preHtml.textContent = d.html;
+        const preMeta = document.createElement('div');
+        preMeta.className = 'd-code-meta';
+        preMeta.textContent = d.meta;
+        code.appendChild(preHtml);
+        code.appendChild(preMeta);
+
+        cardsWrap.appendChild(card);
+        codesWrap.appendChild(code);
+
+        items.push({
+          idx: i,
+          data: d,
+          card: card,
+          code: code,
+          x: 0,
+          cut: 0
+        });
+      });
+
+      const PALETTE = ['#FF4A12', '#FF5A1F', '#FF6B2C', '#FF8A3D', '#FFB06A', '#FFD9B5', '#FFF3E6'];
+      const sparks = [];
+
+      function hash(a, b, c) {
+        let h = (a * 374761393 + b * 668265263 + c * 2147483647) | 0;
+        h = Math.imul(h ^ (h >>> 13), 1274126177);
+        return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+      }
+
+      let W = 1000, H = 355, cw = 420, ch = 265, gap = 44, Lx = 500, dpr = 1;
+      let off = 0, vel = -85, hover = 0, hoverTarget = 0;
+      let dragging = false, dragMoved = false, lastX = 0, lastMoveT = 0;
+      let shownCount = 48193, activeCrossingIdx = -1;
+
+      function measure() {
+        const r = belt.getBoundingClientRect();
+        W = r.width || 1000;
+        H = r.height || 355;
+        Lx = W / 2;
+        const firstRect = items[0].card.getBoundingClientRect();
+        cw = firstRect.width || 420;
+        ch = firstRect.height || 265;
+        gap = window.innerWidth < 768 ? 28 : 44;
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        if (off === 0) {
+          off = Lx - 0.62 * cw;
+        }
+      }
+
+      belt.addEventListener('mouseenter', function () { hoverTarget = 1; });
+      belt.addEventListener('mouseleave', function () { hoverTarget = 0; });
+
+      belt.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        dragMoved = false;
+        lastX = e.clientX;
+        lastMoveT = performance.now();
+        belt.setPointerCapture(e.pointerId);
+      });
+
+      belt.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        const now = performance.now();
+        const dx = e.clientX - lastX;
+        const dtMs = Math.max(8, now - lastMoveT);
+        if (Math.abs(dx) > 4) dragMoved = true;
+        off += dx;
+        const instVel = (dx / dtMs) * 1000;
+        vel = instVel * 0.8 + vel * 0.2;
+        lastX = e.clientX;
+        lastMoveT = now;
+      });
+
+      function stopDrag() {
+        if (!dragging) return;
+        dragging = false;
+        setTimeout(function () { dragMoved = false; }, 50);
+      }
+      belt.addEventListener('pointerup', stopDrag);
+      belt.addEventListener('pointercancel', stopDrag);
+
+      // Evitar abrir el enlace si el usuario estaba arrastrando la cinta
+      cardsWrap.addEventListener('click', function (e) {
+        if (dragMoved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      function mod(n, m) {
+        return ((n % m) + m) % m;
+      }
+
+      let lastT = performance.now();
+      measure();
+      window.addEventListener('resize', measure);
+
+      function tick(now) {
+        const dt = Math.min(0.05, (now - lastT) / 1000);
+        lastT = now;
+        const tSec = now / 1000;
+
+        hover += (hoverTarget - hover) * Math.min(1, dt * 4);
+        const autoSpeed = -0.072 * W;
+        const targetSpeed = autoSpeed * (1 - 0.65 * hover);
+
+        if (!dragging) {
+          vel += (targetSpeed - vel) * (1 - Math.exp(-2.2 * dt));
+          off += vel * dt;
+        }
+
+        const span = cw + gap;
+        const period = span * N;
+        let crossingItem = null;
+
+        for (let i = 0; i < N; i++) {
+          const it = items[i];
+          const x = mod(off + i * span + span, period) - span;
+          it.x = x;
+
+          const cut = Math.max(0, Math.min(cw, Lx - x));
+          it.cut = cut;
+
+          it.card.style.transform = 'translate3d(' + x.toFixed(2) + 'px, 0, 0)';
+          if (cut > 0) {
+            it.card.style.clipPath = 'inset(0px 0px 0px ' + cut.toFixed(1) + 'px round 0 20px 20px 0)';
+            const mMask = 'linear-gradient(90deg, transparent ' + cut.toFixed(1) + 'px, #000 ' + (cut + 26).toFixed(1) + 'px)';
+            it.card.style.webkitMaskImage = mMask;
+            it.card.style.maskImage = mMask;
+          } else {
+            it.card.style.clipPath = 'none';
+            it.card.style.webkitMaskImage = 'none';
+            it.card.style.maskImage = 'none';
+          }
+
+          if (cut <= 0.5) {
+            it.code.style.visibility = 'hidden';
+          } else {
+            it.code.style.visibility = 'visible';
+            it.code.style.transform = 'translate3d(' + x.toFixed(2) + 'px, 0, 0)';
+            it.code.style.clipPath = 'inset(0px ' + (cw - cut).toFixed(1) + 'px 0px 0px)';
+          }
+
+          if (cut > 0 && cut < cw) {
+            crossingItem = it;
+          }
+        }
+
+        // Actualizar el contador sobre la línea del escáner
+        if (crossingItem) {
+          const saved = crossingItem.data.orig - crossingItem.data.dist;
+          const progress = crossingItem.cut / cw;
+          const targetNum = Math.round(saved * progress);
+          if (crossingItem.idx !== activeCrossingIdx) {
+            activeCrossingIdx = crossingItem.idx;
+            pctEl.textContent = crossingItem.data.pct;
+          }
+          shownCount += (targetNum - shownCount) * Math.min(1, dt * 14);
+          numEl.textContent = '−' + Math.round(shownCount).toLocaleString('en-US');
+        }
+
+        // Dibujar el efecto de disolución en partículas naranjas (Canvas drawFx)
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+
+        const cardTop = 40;
+        const rows = Math.floor(ch / 3);
+        const R = 0.3 * cw;
+
+        for (let i = 0; i < N; i++) {
+          const it = items[i];
+          if (it.cut <= 0 || it.x + cw <= Lx) continue;
+
+          // 1. Haze (resplandor horizontal desde la línea hacia la tarjeta)
+          const hazeW = Math.min(140, it.x + cw - Lx);
+          if (hazeW > 0) {
+            const grad = ctx.createLinearGradient(Lx, 0, Lx + 140, 0);
+            grad.addColorStop(0, 'rgba(255, 96, 40, 0.42)');
+            grad.addColorStop(1, 'rgba(255, 96, 40, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(Lx, cardTop, hazeW, ch);
+          }
+
+          // 2. Nube densa de píxeles naranjas sobre la superficie de la tarjeta
+          const startGx = Math.max(0, Math.floor((Lx - it.x) / 3));
+          const endGx = Math.min(Math.floor(cw / 3), Math.ceil((Lx + R - it.x) / 3));
+          const tTick = Math.floor(tSec * 9) + 97;
+
+          for (let gx = startGx; gx < endGx; gx++) {
+            const sx = it.x + gx * 3;
+            const d = sx - Lx;
+            if (d < 0 || d > R) continue;
+            const p = Math.pow(1 - d / R, 1.7);
+
+            for (let row = -4; row < rows + 4; row++) {
+              const inside = row >= 0 && row < rows;
+              const prob = inside ? p * 0.92 : p * 0.16;
+              const h1 = hash(gx, row, it.idx);
+              if (h1 >= prob) continue;
+
+              // Parpadeo (twinkle)
+              if (hash(gx, row, tTick) < 0.22) continue;
+
+              const h2 = hash(row, gx, it.idx + 31);
+              let colIdx;
+              if (d < 10) {
+                colIdx = 4 + Math.min(2, Math.floor(h2 * 3));
+              } else {
+                colIdx = Math.min(6, Math.floor(h2 * h2 * 7));
+              }
+
+              const sz = 1.1 + h2 * 1.7;
+              const jx = (h1 - 0.5) * 1.5;
+              const jy = (h2 - 0.5) * 1.5;
+              ctx.fillStyle = PALETTE[colIdx];
+              ctx.fillRect(sx + jx, cardTop + row * 3 + jy, sz, sz);
+            }
+          }
+
+          // 3. Chispas libres (Free sparks)
+          for (let s = 0; s < 2; s++) {
+            if (Math.random() < 0.65 && sparks.length < 90) {
+              sparks.push({
+                x: Lx + Math.random() * 26,
+                y: cardTop - 8 + Math.random() * (ch + 16),
+                vx: -30 + Math.random() * 70 + vel * 0.5,
+                vy: (Math.random() - 0.5) * 50,
+                sz: 0.9 + Math.random() * 1.8,
+                col: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+                life: 0.35 + Math.random() * 0.75
+              });
+            }
+          }
+        }
+
+        // Actualizar y dibujar chispas
+        for (let k = sparks.length - 1; k >= 0; k--) {
+          const sp = sparks[k];
+          sp.life -= dt;
+          if (sp.life <= 0) {
+            sparks.splice(k, 1);
+            continue;
+          }
+          sp.x += sp.vx * dt;
+          sp.y += sp.vy * dt;
+          ctx.globalAlpha = Math.min(1, sp.life * 2.2);
+          ctx.fillStyle = sp.col;
+          ctx.fillRect(sp.x, sp.y, sp.sz, sp.sz);
+        }
+        ctx.globalAlpha = 1;
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+
+    // ============================================================
+    // 5. MANIFIESTO PERSONAL: VIDRIO ROTO (FACET) + REVELADO PALABRA POR PALABRA (ORVANTE)
+    // ============================================================
+    (function initFacetAndOrvanteManifesto() {
+      const banner = document.getElementById('manifestoBanner');
+      const stage = document.getElementById('facetGlassStage');
+      const slab = document.getElementById('facetSlab');
+      const backBtn = document.getElementById('facetBackBtn');
+      if (!banner || !stage || !slab) return;
+
+      // 1. Estampar el diseño "MI FORMA DE TRABAJAR" en cada uno de los 5 fragmentos de vidrio ahumado
+      const shardPrintHTML = `
+        <div class="facet-shard-print">
+          <div class="facet-kicker">FILOSOFÍA PERSONAL · COMPROMISO REAL</div>
+          <div class="facet-headline">MI FORMA DE TRABAJAR</div>
+          <div class="facet-sub">Haz clic sobre el cristal ahumado para romperlo y descubrir mis valores de trabajo.</div>
+          <div class="facet-actions">
+            <span class="facet-pill">Romper cristal</span>
+            <span class="facet-link">Ver valores →</span>
+          </div>
+        </div>
+      `;
+      const shards = Array.from(slab.querySelectorAll('.facet-shard'));
+      shards.forEach((sh) => {
+        sh.innerHTML = shardPrintHTML;
+      });
+
+      // 2. Dividir los textos internos en palabras (.orv-word) para el efecto Orvante (#6f6f6f -> #f4f4f4)
+      const orvanteContainers = Array.from(banner.querySelectorAll('[data-orvante-text]'));
+      const allOrvWords = [];
+
+      orvanteContainers.forEach((container) => {
+        const nodes = Array.from(container.childNodes);
+        container.innerHTML = '';
+
+        nodes.forEach((node) => {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const parts = node.textContent.trim().split(/\s+/);
+            parts.forEach((w) => {
+              if (!w) return;
+              const span = document.createElement('span');
+              span.className = 'orv-word';
+              span.textContent = w;
+              container.appendChild(span);
+              container.appendChild(document.createTextNode(' '));
+              allOrvWords.push(span);
+            });
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            const isAccent = node.classList.contains('accent-highlight');
+            const parts = node.textContent.trim().split(/\s+/);
+            parts.forEach((w) => {
+              if (!w) return;
+              const span = document.createElement('span');
+              span.className = isAccent ? 'orv-word is-accent' : 'orv-word';
+              span.textContent = w;
+              container.appendChild(span);
+              container.appendChild(document.createTextNode(' '));
+              allOrvWords.push(span);
+            });
+          }
+        });
+      });
+
+      // 3. Inclinación 3D e iridiscencia al mover el ratón sobre los fragmentos de cristal (Facet)
+      stage.addEventListener('pointermove', (e) => {
+        if (banner.classList.contains('is-shattered')) return;
+        const rect = slab.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width;  // 0..1
+        const ny = (e.clientY - rect.top) / rect.height;  // 0..1
+        const cx = (nx - 0.5) * 2; // -1..1
+        const cy = (ny - 0.5) * 2; // -1..1
+
+        slab.style.setProperty('--slab-rx', `${(-cy * 3.8).toFixed(2)}deg`);
+        slab.style.setProperty('--slab-ry', `${(cx * 5.2).toFixed(2)}deg`);
+
+        const gx = `${(nx * 100).toFixed(1)}%`;
+        const gy = `${(ny * 100).toFixed(1)}%`;
+        shards.forEach((sh) => {
+          sh.style.setProperty('--gx', gx);
+          sh.style.setProperty('--gy', gy);
+          if (sh.matches(':hover')) {
+            sh.style.setProperty('--srx', `${(-cy * 6.5).toFixed(2)}deg`);
+            sh.style.setProperty('--sry', `${(cx * 8.5).toFixed(2)}deg`);
+          } else {
+            sh.style.setProperty('--srx', '0deg');
+            sh.style.setProperty('--sry', '0deg');
+          }
+        });
+      });
+
+      stage.addEventListener('pointerleave', () => {
+        slab.style.setProperty('--slab-rx', '0deg');
+        slab.style.setProperty('--slab-ry', '0deg');
+        shards.forEach((sh) => {
+          sh.style.setProperty('--srx', '0deg');
+          sh.style.setProperty('--sry', '0deg');
+        });
+      });
+
+      // 4. Secuencia de rotura del cristal + iluminación progresiva palabra por palabra (Orvante)
+      let wordTimers = [];
+      function clearWordTimers() {
+        wordTimers.forEach((t) => clearTimeout(t));
+        wordTimers = [];
+      }
+
+      function shatterGlassAndAnimateWords() {
+        if (banner.classList.contains('is-shattered')) return;
+        clearWordTimers();
+        allOrvWords.forEach((w) => w.classList.remove('is-lit'));
+
+        banner.classList.add('is-shattered');
+
+        // Cuando el cristal se abre (~320ms), las palabras se encienden en orden de lectura de gris (#6f6f6f) a blanco (#f4f4f4)
+        allOrvWords.forEach((wordEl, idx) => {
+          const timer = setTimeout(() => {
+            wordEl.classList.add('is-lit');
+          }, 340 + idx * 42);
+          wordTimers.push(timer);
+        });
+      }
+
+      function restoreGlass() {
+        clearWordTimers();
+        banner.classList.remove('is-shattered');
+        allOrvWords.forEach((w) => w.classList.remove('is-lit'));
+      }
+
+      stage.addEventListener('click', shatterGlassAndAnimateWords);
+      if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          restoreGlass();
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
